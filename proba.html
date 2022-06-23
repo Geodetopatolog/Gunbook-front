@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal strzelecki</title>
+    <link rel="stylesheet" href="stylesheet/style.css">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <script src="js/scripts.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="baner">
+
+            <li><img class="ak" id="ak" src="img/ak%20bolt%20face.png" width="80"></li>
+            <li><h1 class="logo" id="logo">Portal strzelecki</h1></li>
+            <li><img class="ar" id="ar" src="img/ar%20bolt%20face.png" width="80"></li>
+
+
+
+<!--            <a style="clear: both"></a>-->
+        </div>
+        
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Strona głowna</a></li>
+                <li><a href="#">Strona głowna</a></li>
+                <li><a href="#">Strona głowna</a></li>
+                <li><a href="#">Strona głowna</a></li>
+                <li><a href="#">Strona głowna</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!--lewy panel-->
+    <aside class="sidemenu">
+        <li><a href="#">Mój profil</a></li>
+        <li><a href="#">Mój klub</a></li>
+        <li><a href="#">Moje wydarzenia</a></li>
+        <li><a href="#">Znajomi</a></li>
+        <li><input type="button" value="Animacja" onclick="randomAnimation()"></li>
+        <li><input type="button" value="Radio button" onclick="displayRadioValue()"></li>
+        <li><input type="button" value="Option" onclick="randomAnimation()"></li>
+        <li><input type="button" value="Checkbox" onclick="randomAnimation()"></li>
+        <li><input type="button" value="Option" onclick="randomAnimation()"></li>
+
+    </aside>
+<!--prawy panel-->
+    <aside class="ad">
+        <img src="img/baner.jpg" width="150">
+    </aside>
+
+    <main id="main">
+
+        <form action="" method="post" enctype="multipart/form-data">
+<!--radio-->
+            <div id="radiob">
+                <fieldset>
+                    <legend> Rodzaj nadwozia</legend>
+                    <div><label><input type="radio" name="nadwozie" value="Hatchback" checked>Hatchback</label></div>
+                    <div><label><input type="radio" name="nadwozie" value="Kombi">Kombi</label></div>
+                </fieldset>
+
+                <fieldset>
+                    <legend> Rodzaj paliwa</legend>
+                    <div><label><input type="radio" name="paliwo" value="Benzyna" checked>Benzyna</label></div>
+                    <div><label><input type="radio" name="paliwo" value="Diesel">Diesel</label></div>
+                    <div id="result"></div>
+                </fieldset>
+            </div>
+
+<!--option -->
+            <div>
+           <label for="kolor">Kolor</label>
+            <select id="kolor">
+                <option value="Czerwony">Czerwony</option>
+                <option value="Zielony" selected>Zielony</option>
+                <option value="Purpurowy">Purpurowy</option>
+                <option value="Różowy">Różowy</option>
+            </select>
+            </div>
+
+<!--checkbox-->
+            <div>
+                <fieldset>
+                    <legend> Wyposażenie samochodu</legend>
+                        <div style="float: left">
+                            <div><label><input type="checkbox" name="Wyposażenie" value="Klima">Klima</label></div>
+                            <div><label><input type="checkbox" name="Wyposażenie" value="Tempomat">Tempomat</label></div>
+                            <div><label><input type="checkbox" name="Wyposażenie" value="Radio MP3">Radio MP3</label></div>
+                        </div>
+                        <div style="float: left">
+                            <div><label><input type="checkbox" name="Wyposażenie" value="Skóry">Skóry</label></div>
+                            <div><label><input type="checkbox" name="Wyposażenie" value="Swiatła led">Swiatła led</label></div>
+                            <div><label><input type="checkbox" name="Wyposażenie" value="ESP" checked disabled>ESP</label></div>
+                        </div>
+                        <div style="clear: both"></div>
+
+                </fieldset>
+            </div>
+
+<!--option -->
+            <div>
+                <label for="zapach">Jaki zapach choinki</label>
+                <div>
+                    <select id="zapach" name="zapach" multiple size="3">
+                        <option value="K">Kokosowy</option>
+                        <option value="M" selected>Malinowa</option>
+                        <option value="T">Truskawkowa</option>
+                        <option value="M">Miętowy</option>
+                    </select>
+                </div>
+            </div>
+
+<!--Pola z tekstem itp-->
+            <div>
+                <label>Imię <input type="text" name="imie" placeholder="Zenek"></label><br>
+                <label>Hasło <input type="password" name="haslo"></label><br>
+                <label>Wyszukaj <input type="search" name="fraza"></label><br>
+                <label>Liczba <input type="number" name="liczba"></label><br>
+                <label>Email <input type="email" name="email"></label><br>
+                <label>Telefon <input type="tel" name="telefon"></label><br>
+                <label>Data <input type="date" name="data"></label><br>
+                <label>Czas <input type="time" name="czas" step="1"></label><br>
+            </div>
+
+            <div>
+                <div><label for="komentarz"> Uwagi do zamówienia </label></div>
+                <textarea name="komentarz" id="komentarz" rows="6" cols="70"></textarea>
+            </div>
+
+            <div>
+                <label> Prześlij zdjęcie!</label>
+                <input type="file" name="obraz">
+            </div>
+
+            <div>
+<!--                lepiej władować jakiś JS-->
+                <label>Kolor</label>
+                <input type="color" name="kolor">
+            </div>
+
+            <div>
+                <label>Progres</label>
+<!--                teź są fajne w JS-->
+                <progress max="100" value="25"></progress>
+            </div>
+
+            <div>
+                <label>Stopień czegoś</label>
+                <meter min="0" max="100" title="%" value="40" low="30" high="70" optimum="75"></meter>
+            </div>
+
+            <div>
+                <label>Twoja strona www</label>
+                <input type="url" name="www">
+            </div>
+
+
+
+
+            <div>
+                <input type="submit" value="Działaj!">
+<!--                <input type="button" value="Działaj!">-->
+<!--                <button type="reset">Zamawiam!</button>-->
+            </div>
+
+        </form>
+
+
+
+    </main>
+
+    <footer>
+        <h2>Stopka</h2>
+    </footer>
+
+
+</body>
+</html>

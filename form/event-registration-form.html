@@ -1,0 +1,86 @@
+<form>
+
+    <div>
+        <fieldset class="form_fieldset">
+            <legend>Dane wydarzenia</legend>
+            <div class="form_row">
+                <label class="form_label">Nazwa </label>
+                <input class="form_input" type="text" id="nazwa" placeholder="Nazwa">
+                <div class="clear_both"></div>
+            </div>
+
+            <div class="form_row">
+                <label class="form_label">Rozpoczęcie</label>
+                <input class="form_input" type="date" id="dziens" oninput="setSameValueOnEventDate()">
+                <input class="form_input" type="time" id="godzinas">
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Zakończenie</label>
+                <input class="form_input" type="date" id="dzienk">
+                <input class="form_input" type="time" id="godzinak">
+                <div class="clear_both"></div>
+            </div>
+
+            <div class="form_row">
+                <label class="form_label">Strzelnica </label>
+                <select id="strzelnica">
+                    <option value="brak">brak</option>
+                </select>
+                <div class="clear_both"></div>
+            </div>
+
+            <div class="form_row">
+                <div class="float_left">
+                    <fieldset class="form_fieldset">
+                        <legend>Typ wydarzenia</legend>
+                        <div><label><input type="checkbox" name="Typ" value="Zawody" id="zawody">Zawody sportowe</label></div>
+                        <div><label><input type="checkbox" name="Typ" value="Szkolenie" id="szkolenie">Szkolenie</label></div>
+                        <div><label><input type="checkbox" name="Typ" value="Rekreacja" id="rekreacja">Rekreacja</label></div>
+                    </fieldset>
+                </div>
+                <div class="float_left">
+                    <fieldset class="form_fieldset">
+                        <legend>Warunki uczestnictwa</legend>
+                        <div><label><input type="checkbox" name="War" value="Czlonkowie" id="czlonkowie">Tylko dla członków</label></div>
+                        <div><label><input type="checkbox" name="War" value="Zapisy" id="zapisy">Wymagane zapisy</label></div>
+                    </fieldset>
+                </div>
+                <div class="float_left">
+                    <fieldset class="form_fieldset">
+                        <legend>Broń</legend>
+                        <div><label><input type="checkbox" name="Bron" value="Pistolet" id="pistolet">Pistolet</label></div>
+                        <div><label><input type="checkbox" name="Bron" value="Karabin" id="karabin">Karabin</label></div>
+                        <div><label><input type="checkbox" name="Bron" value="Strzelba" id="strzelba">Strzelba</label></div>
+                    </fieldset>
+                </div>
+                <div class="clear_both"></div>
+            </div>
+
+            <div class="form_row">
+                <label class="form_label">Wpisowe</label>
+                <input class="form_input" type="text" id="oplata">
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Opis wydarzenia </label>
+                <textarea class="form_input" id="opis" rows="6" cols="50"></textarea>
+                <div class="clear_both"></div>
+            </div>
+
+        </fieldset>
+
+    </div>
+
+
+    <div class="form_submit_button">
+        <!--        <input type="submit" value="Zarejestruj się">-->
+        <!--        jakimś cudem wywala to cały formularz :P-->
+        <input type="button" value="Zarejestruj się" onclick="submitEventForm()">
+    </div>
+
+
+
+
+
+</form>

@@ -1,0 +1,46 @@
+<div class="form_submit_button">
+    <label class="form_label">Podaj ID </label>
+    <input class="form_input" type="text" id="id_club" placeholder="Id">
+    <input type="button" value="Znajdź klub" onclick="findClubById()">
+</div>
+<form>
+
+    <div>
+        <fieldset class="form_fieldset">
+            <legend>Dane klubu</legend>
+            <div class="form_row">
+                <label class="form_label">Nazwa </label>
+                <input class="form_input" type="text" id="nazwa" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Logo </label>
+                <input class="form_input" type="text" id="logo" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Email </label>
+                <input class="form_input" type="email" id="email" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Opis klubu </label>
+                <textarea class="form_input" id="opis" rows="6" cols="50" disabled></textarea>
+                <div class="clear_both"></div>
+            </div>
+
+        </fieldset>
+
+        <fieldset class="form_fieldset">
+            <legend>Jakie aktywności przewiduje klub</legend>
+            <div class="form_row">
+                <div><label><input type="checkbox" name="Typ" value="Sport" id="sport" disabled>Sport</label></div>
+                <div><label><input type="checkbox" name="Typ" value="Szkolenia" id="szkolenia" disabled>Szkolenia</label></div>
+                <div><label><input type="checkbox" name="Typ" value="Rekreacja" id="rekreacja" disabled>Rekreacja</label></div>
+            </div>
+        </fieldset>
+    </div>
+
+
+
+</form>

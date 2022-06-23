@@ -1,0 +1,53 @@
+<form>
+    <div class="form_submit_button">
+        <label class="form_label">Podaj ID </label>
+        <input class="form_input" type="text" id="id_person" placeholder="Id">
+        <input type="button" value="Znajdź kolesia" onclick="findPersonById()">
+    </div>
+
+    <div>
+        <fieldset class="form_fieldset">
+            <legend>Informacje o osobie</legend>
+            <div class="form_row">
+                <label class="form_label">Imię </label>
+                <input class="form_input" type="text" id="imie" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Nazwisko </label>
+                <input class="form_input" type="text" id="nazwisko" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Nick </label>
+                <input class="form_input" type="text" id="nick" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Email </label>
+                <input class="form_input" type="email" id="email" disabled>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">O mnie </label>
+                <textarea class="form_input" id="opis" rows="6" cols="50" disabled></textarea>
+                <div class="clear_both"></div>
+            </div>
+            <div class="form_row">
+                <label class="form_label">Kluby </label>
+                <div id="kluby"></div>
+<!--                <li><a onclick="load_club_form()">klub strzelajacych inaczej</a></li>-->
+                <div class="clear_both"></div>
+            </div>
+
+        </fieldset>
+    </div>
+
+
+
+
+
+
+
+
+</form>

@@ -1,0 +1,188 @@
+body
+{
+    background-color: #3d3939;
+    color: #ffffff;
+}
+
+.row
+{
+    background-color: bisque;
+    width: 400px;
+    height: 50px;
+    margin: 5px;
+
+}
+
+.baner
+{
+    text-align: center;
+}
+
+.baner > li
+{
+    display: inline-block;
+}
+
+.ak
+{
+    transition: transform 200ms;
+}
+
+.ak:hover
+{
+    /*transform: rotate(26deg) scale(90%);*/
+}
+
+.ar{
+    transition: transform 200ms;
+}
+
+.ar:hover
+{
+    /*transform: rotate(-22deg) scale(90%);*/
+}
+
+h1.logo
+{
+    float: left;
+    font-size: 40px;
+    font-weight:  700;
+    color: cornflowerblue;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+nav
+{
+    background-color: beige;
+    text-align: center;
+}
+
+.menu
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    font-size: 17px;
+    min-height: 38px;
+    line-height: 200%;
+}
+
+.menu > li
+{
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 1px dashed burlywood;
+}
+
+.menu > li:first-child
+{
+    border-left: 1px dashed burlywood;
+}
+
+.menu a
+{
+    color: cornflowerblue;
+    text-decoration: none;
+}
+
+.menu a:hover
+{
+    color: blue;
+}
+
+aside
+{
+    border: 2px solid green;
+}
+.sidemenu
+{
+    float: left;
+    width: 150px;
+    height: 700px;
+    list-style-type: none;
+    padding: 2px;
+    font-size: 15px;
+}
+
+.sidemenu > li
+{
+
+}
+
+.sidemenu a
+{
+    color: salmon;
+    text-decoration: none;
+}
+
+
+.ad
+{
+    float: right;
+    height: 700px;
+    padding: 2px;
+
+}
+
+main
+{
+    overflow: hidden;
+    border: 2px solid orangered;
+    width: border-box;
+    padding: 10px;
+
+}
+
+footer
+{
+    clear: both;
+    text-align: center;
+    border: 2px solid #3053ba;
+}
+
+.form_fieldset
+{
+    margin-bottom: 10px;
+}
+
+.form_row
+{
+    margin-bottom: 5px;
+    /*border-bottom: 1px solid lightgoldenrodyellow;*/
+}
+
+.form_row:last-child
+{
+    /*border-bottom: none;*/
+}
+
+.form_input
+{
+    float: left;
+    background-color: white;
+}
+
+.form_label
+{
+    float: left;
+    width: 100px;
+}
+
+.form_submit_button {
+    text-align: center;
+}
+
+.float_left
+{
+    float: left;
+}
+
+.clear_both
+{
+    clear: both;
+}
