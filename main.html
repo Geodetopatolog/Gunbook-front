@@ -2,14 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <title>Portal strzelecki</title>
     <link rel="stylesheet" href="stylesheet/style.css">
 
@@ -24,7 +16,7 @@
     <script src="js/form-loaders.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/animacje.js"></script>
-
+    <script src="js/permissions.js"></script>
 
 </head>
 
@@ -32,17 +24,17 @@
 
 <header>
     <div class="baner">
-
-        <li><img class="ak" id="ak" src="img/ak%20bolt%20face.png" width="80"></li>
-        <li><h1 class="logo" id="logo">Portal strzelecki</h1></li>
-        <li><img class="ar" id="ar" src="img/ar%20bolt%20face.png" width="80"></li>
-
+        <ul >
+            <li><img class="ak" id="ak" src="img/ak%20bolt%20face.png" width="80"></li>
+            <li><h1 class="logo" id="logo">Portal strzelecki</h1></li>
+            <li><img class="ar" id="ar" src="img/ar%20bolt%20face.png" width="80"></li>
+        </ul>
     </div>
 
     <nav>
         <ul class="menu">
             <li><a href="#">Strona głowna</a></li>
-            <li><a href="#">Strona głowna</a></li>
+            <li><a href="#">Wydarzenia</a></li>
             <li><a href="#">Strona głowna</a></li>
             <li><a href="#">Strona głowna</a></li>
             <li><a href="#">Strona głowna</a></li>
@@ -52,23 +44,27 @@
 
 <!--lewy panel-->
 <aside class="sidemenu" onclick="randomAnimation()">
-    <li><input type="button" value="Formularz osobowy" onclick="load_person_registration_form()"></li>
-    <li><input type="button" value="Podgląd osoby" onclick="load_person_form()"></li>
-    <li><input type="button" value="Formularz klubu" onclick="load_club_registration_form()"></li>
-    <li><input type="button" value="Podgląd klubu" onclick="load_club_form()"></li>
-    <li><input type="button" value="Formularz eventu" onclick="load_event_registration_form()"></li>
-    <li><input type="button" value="Podgląd eventu" onclick="load_event_form()"></li>
-    <li><input type="button" value="Formularz strzelnicy" onclick="load_range_registration_form()"></li>
-    <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form()"></li>
-    <li><a href="#">Mój profil</a></li>
-    <li><a href="#">Mój klub</a></li>
-    <li><a href="#">Moje wydarzenia</a></li>
-    <li><a href="#">Znajomi</a></li>
+    <ul>
+        <li><a href="#">Mój profil</a></li>
+        <li><a href="#">Mój klub</a></li>
+        <li><a href="#">Moje wydarzenia</a></li>
+        <li><a href="#">Znajomi</a></li>
 <!--    <li><input type="button" value="Radio button" onclick="displayRadioValue()"></li>-->
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Checkbox" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
-
+        <li><input type="button" value="Formularz osobowy" onclick="load_person_registration_form()"></li>
+        <li><input type="button" value="Podgląd osoby" onclick="load_person_form()"></li>
+        <li><input type="button" value="Mój profil" onclick="load_logged_person_form()"></li>
+        <li><input type="button" value="Formularz klubu" onclick="load_club_registration_form()"></li>
+        <li><input type="button" value="Podgląd klubu" onclick="load_club_form()"></li>
+        <li><input type="button" value="Formularz eventu" onclick="load_event_registration_form()"></li>
+        <li><input type="button" value="Podgląd eventu" onclick="load_event_form()"></li>
+        <li><input type="button" value="Formularz strzelnicy" onclick="load_range_registration_form()"></li>
+        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form()"></li>
+        <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>
+        <li><input type="button" value="Wyloguj" onclick="logout()"></li>
+    </ul>
 </aside>
 <!--prawy panel-->
 <aside class="ad">
@@ -88,5 +84,4 @@
 
 
 </body>
-</html>
 </html>

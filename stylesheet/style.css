@@ -10,15 +10,15 @@ body
     width: 400px;
     height: 50px;
     margin: 5px;
-
 }
 
 .baner
 {
     text-align: center;
+    list-style-type: none;
 }
 
-.baner > li
+.baner li
 {
     display: inline-block;
 }
@@ -28,18 +28,9 @@ body
     transition: transform 200ms;
 }
 
-.ak:hover
+.ar
 {
-    /*transform: rotate(26deg) scale(90%);*/
-}
-
-.ar{
     transition: transform 200ms;
-}
-
-.ar:hover
-{
-    /*transform: rotate(-22deg) scale(90%);*/
 }
 
 h1.logo
@@ -51,7 +42,7 @@ h1.logo
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 5px;
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 15px;
 }
 
@@ -97,8 +88,9 @@ nav
 
 aside
 {
-    border: 2px solid green;
+
 }
+
 .sidemenu
 {
     float: left;
@@ -107,11 +99,14 @@ aside
     list-style-type: none;
     padding: 2px;
     font-size: 15px;
+    border: 2px solid green;
 }
 
-.sidemenu > li
+.sidemenu ul
 {
-
+    list-style-type: none;
+    padding: 2px;
+    font-size: 15px;
 }
 
 .sidemenu a
@@ -120,13 +115,13 @@ aside
     text-decoration: none;
 }
 
-
 .ad
 {
     float: right;
     height: 700px;
+    width: 150px;
     padding: 2px;
-
+    border: 2px solid deeppink;
 }
 
 main

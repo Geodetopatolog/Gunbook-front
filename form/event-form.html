@@ -1,5 +1,5 @@
 <div class="form_submit_button">
-    <label class="form_label">Podaj ID </label>
+    <label class="form_label" for="id_event">Podaj ID </label>
     <input class="form_input" type="text" id="id_event" placeholder="Id">
     <input type="button" value="Znajdź event" onclick="findEventById()">
 </div>
@@ -8,26 +8,26 @@
         <fieldset class="form_fieldset">
             <legend>Dane wydarzenia</legend>
             <div class="form_row">
-                <label class="form_label">Nazwa </label>
+                <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" disabled>
                 <div class="clear_both"></div>
             </div>
 
             <div class="form_row">
-                <label class="form_label">Rozpoczęcie</label>
+                <label class="form_label"  for="dziens">Rozpoczęcie</label>
                 <input class="form_input" type="date" id="dziens" oninput="setSameValueOnEventDate()" disabled>
                 <input class="form_input" type="time" id="godzinas" disabled>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label">Zakończenie</label>
+                <label class="form_label" for="dzienk">Zakończenie</label>
                 <input class="form_input" type="date" id="dzienk" disabled>
                 <input class="form_input" type="time" id="godzinak" disabled>
                 <div class="clear_both"></div>
             </div>
 
             <div class="form_row">
-                <label class="form_label">Strzelnica </label>
+                <label class="form_label" for="strzelnica">Strzelnica </label>
                 <input class="form_input" type="text" id="strzelnica" disabled>
                 <div class="clear_both"></div>
             </div>
@@ -60,12 +60,12 @@
             </div>
 
             <div class="form_row">
-                <label class="form_label">Wpisowe</label>
+                <label class="form_label"  for="oplata">Wpisowe</label>
                 <input class="form_input" type="text" id="oplata" disabled>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label">Opis wydarzenia </label>
+                <label class="form_label" for="opis">Opis wydarzenia </label>
                 <textarea class="form_input" id="opis" rows="6" cols="50" disabled></textarea>
                 <div class="clear_both"></div>
             </div>

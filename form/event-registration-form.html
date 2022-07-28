@@ -4,26 +4,26 @@
         <fieldset class="form_fieldset">
             <legend>Dane wydarzenia</legend>
             <div class="form_row">
-                <label class="form_label">Nazwa </label>
+                <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" placeholder="Nazwa">
                 <div class="clear_both"></div>
             </div>
 
             <div class="form_row">
-                <label class="form_label">Rozpoczęcie</label>
+                <label class="form_label" for="dziens">Rozpoczęcie</label>
                 <input class="form_input" type="date" id="dziens" oninput="setSameValueOnEventDate()">
                 <input class="form_input" type="time" id="godzinas">
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label">Zakończenie</label>
+                <label class="form_label" for="dzienk">Zakończenie</label>
                 <input class="form_input" type="date" id="dzienk">
                 <input class="form_input" type="time" id="godzinak">
                 <div class="clear_both"></div>
             </div>
 
             <div class="form_row">
-                <label class="form_label">Strzelnica </label>
+                <label class="form_label" for="strzelnica">Strzelnica </label>
                 <select id="strzelnica">
                     <option value="brak">brak</option>
                 </select>
@@ -58,12 +58,12 @@
             </div>
 
             <div class="form_row">
-                <label class="form_label">Wpisowe</label>
+                <label class="form_label" for="oplata">Wpisowe</label>
                 <input class="form_input" type="text" id="oplata">
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label">Opis wydarzenia </label>
+                <label class="form_label" for="opis">Opis wydarzenia </label>
                 <textarea class="form_input" id="opis" rows="6" cols="50"></textarea>
                 <div class="clear_both"></div>
             </div>
