@@ -21,10 +21,7 @@ mappings.set(actions.DELETE_PERSON, [roles.ADMIN, roles.GOD]);
 mappings.set(actions.CREATE_PERSON, [roles.GUEST, roles.USER, roles.ADMIN, roles.GOD]);
 
 function hasPermission(authority, action) {
-    // if (!file?.accessLevel) {
-    //     return false;
-    // }
-console.log(mappings);
+
     if (mappings.has(action)) {
         console.log(mappings.get(action).includes(authority));
         return mappings.get(action).includes(authority);

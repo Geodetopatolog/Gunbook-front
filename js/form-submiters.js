@@ -1,3 +1,36 @@
+function submitPersonForm() {
+
+    let pass1 = document.getElementById("pass1").value;
+    let pass2 = document.getElementById("pass2").value;
+
+    if (pass1===pass2) {
+        let Url = 'http://localhost:8080/person';
+        let Data = {
+            "name": "",
+            "surname": "",
+            "nick": "",
+            "description": "",
+            "email": "",
+            "login": "",
+            "username":"",
+            "password": ""
+        }
+
+        Data.name = document.getElementById("imie").value;
+        Data.surname = document.getElementById("nazwisko").value;
+        Data.nick = document.getElementById("nick").value;
+        Data.description = document.getElementById("opis").value;
+        Data.email = document.getElementById("email").value;
+        Data.username = document.getElementById("login").value;
+        Data.password = pass1;
+
+        httpRequestPost(Url, Data);
+
+    } else {
+    //todo dorobić to
+    }
+}
+
 function submitClubForm() {
     let Url = 'http://localhost:8080/club';
     let Data = {
@@ -18,29 +51,6 @@ function submitClubForm() {
     Data.fun = document.getElementById("rekreacja").checked;
 
     httpRequestPost(Url, Data);
-}
-
-async function findClubById() {
-    let Url = 'http://localhost:8080/club?id_club=';
-
-    Url = Url + document.getElementById("id_club").value;
-
-    let Data = await httpRequestGet(Url);
-    console.log(Data);
-
-    document.getElementById("nazwa").value = Data.name;
-    document.getElementById("opis").value = Data.description;
-    document.getElementById("email").value = Data.email;
-
-    if (Data.sport === true)
-        (document.getElementById("sport").checked = true)
-
-    if (Data.fun === true)
-        (document.getElementById("szkolenia").checked = true)
-
-    if (Data.course === true)
-        (document.getElementById("rekreacja").checked = true)
-
 }
 
 async function submitEventForm() {
@@ -81,31 +91,6 @@ async function submitEventForm() {
 
 }
 
-async function findEventById() {
-    let Url = 'http://localhost:8080/event?id_event=';
-
-    Url = Url + document.getElementById("id_event").value;
-
-    let Data = await httpRequestGet(Url);
-    console.log(Data);
-
-    document.getElementById("nazwa").value = Data.name;
-    document.getElementById("opis").value = Data.description;
-    document.getElementById("oplata").value = Data.entryFee;
-    document.getElementById("strzelnica").value = Data.range;
-    document.getElementById("dziens").value = Data.dateOfStart;
-    document.getElementById("dzienk").value = Data.dateOfEnd;
-    document.getElementById("godzinas").value = Data.hourOfStart;
-    document.getElementById("godzinak").value = Data.hourOfEnd;
-
-    if (Data.isCompetition === true) (document.getElementById("zawody").checked = true)
-    if (Data.isPractice === true) (document.getElementById("rekreacja").checked = true)
-    if (Data.isCourse === true) (document.getElementById("szkolenie").checked = true)
-    if (Data.openEntry === true) (document.getElementById("zapisy").checked = true)
-    if (Data.membersOnly === true) (document.getElementById("czlonkowie").checked = true)
-
-}
-
 async function submitRangeForm() {
     let Url = 'http://localhost:8080/range';
     let Data = {
@@ -120,14 +105,3 @@ async function submitRangeForm() {
     await httpRequestPost(Url, Data);
 }
 
-async function findRangeById() {
-    let Url = 'http://localhost:8080/range?id_range=';
-
-    Url = Url + document.getElementById("id_range").value;
-
-    let Data = await httpRequestGet(Url);
-
-    document.getElementById("nazwa").value = Data.name;
-    document.getElementById("opis").value = Data.description;
-    document.getElementById("adres").value = Data.adress;
-}

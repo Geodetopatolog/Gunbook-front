@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Portal strzelecki</title>
     <link rel="stylesheet" href="stylesheet/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="stylesheet/fixedColumns.dataTables.css">
 
 <!--    <link rel="stylesheet" href="form/person-form.html">-->
 <!--    <link rel="stylesheet" href="form/person-registration-form.html">-->
@@ -13,10 +15,16 @@
     <![endif]-->
 
     <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/form-loaders.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/form-loaders.js"></script>
+    <script src="js/form-submiters.js"></script>
+    <script src="js/form-fillers.js"></script>
+    <script src="js/data-getters.js"></script>
     <script src="js/animacje.js"></script>
     <script src="js/permissions.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+
 
 </head>
 
@@ -34,10 +42,10 @@
     <nav>
         <ul class="menu">
             <li><a href="#">Strona głowna</a></li>
-            <li><a href="#">Wydarzenia</a></li>
-            <li><a href="#">Strona głowna</a></li>
-            <li><a href="#">Strona głowna</a></li>
-            <li><a href="#">Strona głowna</a></li>
+            <li><a href="#" onclick="load_all_events_form()">Wydarzenia</a></li>
+            <li><a href="#" onclick="load_all_clubs_form()">Kluby</a></li>
+            <li><a href="#" onclick="load_all_ranges_form()">Strzelnice</a></li>
+            <li><a href="#" onclick="load_all_persons_form()">Użytkownicy</a></li>
         </ul>
     </nav>
 </header>
@@ -56,14 +64,24 @@
         <li><input type="button" value="Formularz osobowy" onclick="load_person_registration_form()"></li>
         <li><input type="button" value="Podgląd osoby" onclick="load_person_form()"></li>
         <li><input type="button" value="Mój profil" onclick="load_logged_person_form()"></li>
+
         <li><input type="button" value="Formularz klubu" onclick="load_club_registration_form()"></li>
-        <li><input type="button" value="Podgląd klubu" onclick="load_club_form()"></li>
+        <li><input type="button" value="Podgląd klubu" onclick="load_club_form(-1)"></li>
+        <li><input type="button" value="Kluby - członek" onclick="load_logged_person_club_form()"></li>
+        <li><input type="button" value="Kluby - właściciel" onclick="load_logged_person_club_form()"></li>
+
         <li><input type="button" value="Formularz eventu" onclick="load_event_registration_form()"></li>
         <li><input type="button" value="Podgląd eventu" onclick="load_event_form()"></li>
+        <li><input type="button" value="Moje eventy" onclick="load_logged_person_joined_event_form()"></li>
+
         <li><input type="button" value="Formularz strzelnicy" onclick="load_range_registration_form()"></li>
         <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form()"></li>
+
         <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>
         <li><input type="button" value="Wyloguj" onclick="logout()"></li>
+
+
+
     </ul>
 </aside>
 <!--prawy panel-->

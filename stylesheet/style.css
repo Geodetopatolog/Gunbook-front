@@ -23,15 +23,15 @@ body
     display: inline-block;
 }
 
-.ak
-{
-    transition: transform 200ms;
-}
+/*.ak*/
+/*{*/
+/*    transition: transform 100ms;*/
+/*}*/
 
-.ar
-{
-    transition: transform 200ms;
-}
+/*.ar*/
+/*{*/
+/*    transition: transform 100ms;*/
+/*}*/
 
 h1.logo
 {
@@ -181,3 +181,4 @@ footer
 {
     clear: both;
 }
+

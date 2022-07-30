@@ -1,0 +1,21 @@
+table.dataTable thead tr > .dtfc-fixed-left,
+table.dataTable thead tr > .dtfc-fixed-right {
+    z-index: 1;
+    background-color: #3d3939;
+}
+table.dataTable tbody tr > .dtfc-fixed-left,
+table.dataTable tbody tr > .dtfc-fixed-right {
+    z-index: 1;
+    background-color: #3d3939;
+}
+
+table.dataTable tfoot tr > .dtfc-fixed-left,
+table.dataTable tfoot tr > .dtfc-fixed-right {
+    z-index: 1;
+    background-color: #3d3939;
+}
+
+div.dtfc-left-top-blocker,
+div.dtfc-right-top-blocker {
+    background-color: #3d3939;
+}
