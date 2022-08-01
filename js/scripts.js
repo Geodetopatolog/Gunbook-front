@@ -10,7 +10,12 @@
 //
 
 
-
+const methods = {
+    GET: "GET",
+    POST: "POST",
+    PATCH: "PATCH",
+    DELETE: "DELETE"
+}
 
 
 function displayRadioValue() {
@@ -37,17 +42,18 @@ function setSameValueOnEventDate() {
     document.getElementById("dzienk").value = document.getElementById("dziens").value;
 }
 
-async function httpRequestPost(Url, Body) {
-    let Params = {
+async function httpRequestPostPatchDelete(url, body, method) {
+    console.log(method);
+    let params = {
         headers:{
             'Content-Type': "application/json",
             'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
         },
-        body: JSON.stringify(Body),
-        method: "POST"
+        body: JSON.stringify(body),
+        method: method
     }
 
-    fetch(Url, Params)
+    fetch(url, params)
         .then(response => response.statusText)
         .then(data => {
             console.log('sukces:', data)

@@ -6,6 +6,7 @@
             <div class="form_row">
                 <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" placeholder="Nazwa">
+                <input class="form_input" type="text" id="id_event" hidden>
                 <div class="clear_both"></div>
             </div>
 
@@ -74,9 +75,8 @@
 
 
     <div class="form_submit_button">
-        <!--        <input type="submit" value="Zarejestruj się">-->
-        <!--        jakimś cudem wywala to cały formularz :P-->
-        <input type="button" value="Zarejestruj się" onclick="submitEventForm()">
+        <input type="button" value="Zarejestruj się" onclick="submitEventForm(methods.POST)">
+
     </div>
 
 

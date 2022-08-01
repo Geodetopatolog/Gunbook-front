@@ -3,6 +3,29 @@
 <!--    <input class="form_input" type="text" id="id_event" placeholder="Id">-->
 <!--    <input type="button" value="Znajdź event" onclick="getEventById()">-->
 <!--</div>-->
+
+<script>
+    function enableEditing() {
+        $("#form_edit_enable").html(" <input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.PATCH)\">");
+        $("#strzelnica_div").html("<select id=\"strzelnica\"><option value=\"brak\">brak</option></select>");
+        $("#dziens").prop( "disabled", false );
+        $("#godzinas").prop( "disabled", false );
+        $("#dzienk").prop( "disabled", false );
+        $("#godzinak").prop( "disabled", false );
+        $("#zawody").prop( "disabled", false );
+        $("#szkolenie").prop( "disabled", false );
+        $("#rekreacja").prop( "disabled", false );
+        $("#czlonkowie").prop( "disabled", false );
+        $("#zapisy").prop( "disabled", false );
+        $("#pistolet").prop( "disabled", false );
+        $("#karabin").prop( "disabled", false );
+        $("#strzelba").prop( "disabled", false );
+        $("#oplata").prop( "disabled", false );
+        $("#opis").prop( "disabled", false );
+        fillRangesNamesToEventRegistrationForm(getRangesNames());
+    }
+</script>
+
 <form>
     <div>
         <fieldset class="form_fieldset">
@@ -10,6 +33,7 @@
             <div class="form_row">
                 <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" disabled>
+                <input class="form_input" type="text" id="id_event" hidden>
                 <div class="clear_both"></div>
             </div>
 
@@ -22,13 +46,13 @@
             <div class="form_row">
                 <label class="form_label" for="dzienk">Zakończenie</label>
                 <input class="form_input" type="date" id="dzienk" disabled>
-                <input class="form_input" type="time" id="godzinak" disabled>
+               <input class="form_input" type="time" id="godzinak" disabled>
                 <div class="clear_both"></div>
             </div>
 
             <div class="form_row">
                 <label class="form_label" for="strzelnica">Strzelnica </label>
-                <input class="form_input" type="text" id="strzelnica" disabled>
+                <div id="strzelnica_div"><input class="form_input" type="text" id="strzelnica" disabled></div>
                 <div class="clear_both"></div>
             </div>
 
@@ -72,6 +96,9 @@
 
         </fieldset>
 
+    </div>
+    <div class="form_submit_button" id="form_edit_enable">
+        <input type="button" value="Edytuj" onclick="enableEditing()">
     </div>
 
 

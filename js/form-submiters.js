@@ -24,7 +24,7 @@ function submitPersonForm() {
         Data.username = document.getElementById("login").value;
         Data.password = pass1;
 
-        httpRequestPost(Url, Data);
+        httpRequestPostPatchDelete(Url, Data, "POST");
 
     } else {
     //todo dorobić to
@@ -50,13 +50,14 @@ function submitClubForm() {
     Data.sport = document.getElementById("sport").checked;
     Data.fun = document.getElementById("rekreacja").checked;
 
-    httpRequestPost(Url, Data);
+    httpRequestPostPatchDelete(Url, Data, "POST");
 }
 
-async function submitEventForm() {
-    let Url = 'http://localhost:8080/event';
-    let Data = {
+async function submitEventForm(method) {
+    let url = 'http://localhost:8080/event';
+    let event = {
         "name": "",
+        "id_event": -1,
         "description": "",
         "range": "",
         "dateOfStart": "",
@@ -71,24 +72,25 @@ async function submitEventForm() {
         "entryFee": 0
     }
 
-    Data.name = document.getElementById("nazwa").value;
-    Data.description = document.getElementById("opis").value;
-    Data.entryFee = document.getElementById("oplata").value;
-    Data.range = document.getElementById("strzelnica").value;
+    event.name = document.getElementById("nazwa").value;
+    event.id_event = document.getElementById("id_event").value;
+    event.description = document.getElementById("opis").value;
+    event.entryFee = document.getElementById("oplata").value;
+    event.range = document.getElementById("strzelnica").value;
 
-    Data.dateOfStart = document.getElementById("dziens").value;
-    Data.dateOfEnd = document.getElementById("dzienk").value;
-    Data.hourOfStart = document.getElementById("godzinas").value;
-    Data.hourOfEnd = document.getElementById("godzinak").value;
+    event.dateOfStart = document.getElementById("dziens").value;
+    event.dateOfEnd = document.getElementById("dzienk").value;
+    event.hourOfStart = document.getElementById("godzinas").value;
+    event.hourOfEnd = document.getElementById("godzinak").value;
 
-    Data.isCompetition = document.getElementById("zawody").checked;
-    Data.isPractice = document.getElementById("rekreacja").checked;
-    Data.isCourse = document.getElementById("szkolenie").checked;
-    Data.openEntry = document.getElementById("zapisy").checked;
-    Data.membersOnly = document.getElementById("czlonkowie").checked;
+    event.isCompetition = document.getElementById("zawody").checked;
+    event.isPractice = document.getElementById("rekreacja").checked;
+    event.isCourse = document.getElementById("szkolenie").checked;
+    event.openEntry = document.getElementById("zapisy").checked;
+    event.membersOnly = document.getElementById("czlonkowie").checked;
 
-    await httpRequestPost(Url, Data);
-
+    console.log(event);
+    await httpRequestPostPatchDelete(url, event, method);
 }
 
 async function submitRangeForm() {
@@ -102,6 +104,6 @@ async function submitRangeForm() {
     Data.description = document.getElementById("opis").value;
     Data.adress = document.getElementById("adres").value;
 
-    await httpRequestPost(Url, Data);
+    await httpRequestPostPatchDelete(Url, Data);
 }
 

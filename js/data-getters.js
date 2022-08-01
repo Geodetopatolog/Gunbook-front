@@ -1,3 +1,5 @@
+//zwracamy zmienną a nie wynik pobrania danych, żeby w razie czego łatwo dodać np zapisanie do pamięci
+//id=-1 jest jako obsługa zapytania do bazy na podstawie wprowadzonego w pole na stronie id - zapewne do wywalenia po wprowadzeniu tablic ze wszystkimi wpisami w bazie
 async function getPersonById(id) {
 
     let Url = 'http://localhost:8080/person?id_person=';
@@ -7,16 +9,15 @@ async function getPersonById(id) {
     } else {
         Url = Url + id.toString();
     }
-
-    return await httpRequestGet(Url);
-    //todo popoprawiać żeby zwracało dane, a nie od razu je wpisywało
+    let person = await httpRequestGet(Url);
+    return person;
 }
 
 async function getAllPersons() {
     let Url = 'http://localhost:8080/person/all';
-    let Data = await httpRequestGet(Url);
     // console.log(Data);
-    return Data;
+    let persons = await httpRequestGet(Url);
+    return persons;
 }
 
 async function getClubById(id) {
@@ -27,26 +28,24 @@ async function getClubById(id) {
     } else {
         Url = Url + id.toString();
     }
-    let Data = await httpRequestGet(Url);
-    return Data;
+    let club = await httpRequestGet(Url);
+    return club;
 }
 
 async function getClubsByPersonId(id) {
     let Url = 'http://localhost:8080/person/clubs?id_person=';
     Url = Url + id.toString();
-    let Data = await httpRequestGet(Url);
-
+    let clubs = await httpRequestGet(Url);
     //todo wykasować, jak nie bedzie potrzebne :) albo zmienić, żeby przechowywać samo id, się zobaczy
-    localStorage.setItem("loggedUserClubs", JSON.stringify(Data));
-     return Data;
-    //todo przerobić wszystkie na wyświetlanie listy kilku klubów, imprez itp
+    localStorage.setItem("loggedUserClubs", JSON.stringify(clubs));
+     return clubs;
 }
 
 async function getAllClubs() {
     let Url = 'http://localhost:8080/club/all';
-    let Data = await httpRequestGet(Url);
+    let clubs = await httpRequestGet(Url);
     // console.log(Data);
-    return Data;
+    return clubs;
 }
 
 async function getEventById(id) {
@@ -57,28 +56,24 @@ async function getEventById(id) {
     } else {
         Url = Url + id.toString();
     }
-    let Data = await httpRequestGet(Url);
+    let event = await httpRequestGet(Url);
     // console.log(Data);
-    return Data;
+    return event;
 }
 
 async function getAllEvents() {
     let Url = 'http://localhost:8080/event/all';
-    let Data = await httpRequestGet(Url);
+    let events = await httpRequestGet(Url);
     // console.log(Data);
-    return Data;
+    return events;
 }
-
 
 async function getEventsJoinedByPersonId(id) {
     let Url = 'http://localhost:8080/person/joined_events?id_person=';
     Url = Url + id.toString();
 
-    let Data = await httpRequestGet(Url);
-    let Data2 = Data.at(0);
-    // console.log(Data2);
-
-    fillEventForm(Data2);
+    let events = await httpRequestGet(Url);
+    fillEventForm(events);
 }
 
 async function getRangeById(id) {
@@ -89,14 +84,19 @@ async function getRangeById(id) {
     } else {
         Url = Url + id.toString();
     }
-
-    let Data = await httpRequestGet(Url);
-    return Data;
+    let range = await httpRequestGet(Url);
+    return range;
 }
 
 async function getAllRanges() {
     let Url = 'http://localhost:8080/range/all';
-    let Data = await httpRequestGet(Url);
-    // console.log(Data);
-    return Data;
+    let ranges = await httpRequestGet(Url);
+    return ranges;
+}
+
+async function getRangesNames() {
+    let Url = 'http://localhost:8080/range/ranges_names';
+
+    let rangesNames = await httpRequestGet(Url);
+    return rangesNames;
 }

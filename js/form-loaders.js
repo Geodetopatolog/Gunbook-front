@@ -12,7 +12,7 @@ function load_person_form() {
 
 function load_logged_person_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)
-        && localStorage.getItem("loggedUserId") !== "0") {
+        && localStorage.getItem("loggedUserId") !== "-1") { //todo albo null?
 
         $("#main").load("form/person-form.html");
         fillPersonForm(getPersonById(localStorage.getItem("loggedUserId")));
@@ -26,7 +26,6 @@ function load_all_persons_form() {
     }
 }
 
-
 function load_club_registration_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
         $("#main").load("form/club-registration-form.html");
@@ -36,25 +35,15 @@ function load_club_registration_form() {
 function load_club_form(index) {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
        $("#main").load("form/club-form.html");
-        if (index!==-1) {
-            fillClubFormByLocalDataIndex(index);
-        }
     }
 }
 
-async function load_logged_person_club_form() {
+function load_logged_person_club_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)
-        && localStorage.getItem("loggedUserId") !== "0") {
+        && localStorage.getItem("loggedUserId") !== "-1") {
 
         $("#main").load("form/person-clubs-list.html");
-        let Clubs = await getClubsByPersonId(localStorage.getItem("loggedUserId"));
-        let clubHtml = "";
-        console.log(Clubs.length);
-        for (let i=0; i < Object.keys(Clubs).length; i++) {
-            clubHtml = clubHtml +   "<li><input type = \"button\" value = \"" + Clubs[i].name + "\" onclick = \"load_club_form(" + i + ")\"></li>";
-        }
-
-        document.getElementById("clubslist").innerHTML = clubHtml;
+        fillAllClubsTable(getClubsByPersonId(localStorage.getItem("loggedUserId")));
     }
 }
 
@@ -65,19 +54,11 @@ function load_all_clubs_form() {
     }
 }
 
-async function load_event_registration_form() {
+function load_event_registration_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
         $("#main").load("form/event-registration-form.html");
-        let Url = 'http://localhost:8080/range/ranges_names';
+        fillRangesNamesToEventRegistrationForm(getRangesNames());
 
-        let rangesNames = await httpRequestGet(Url);
-
-        let rangesListHtml = "";
-
-        for (let i = 0; i < rangesNames.length; i++) {
-            rangesListHtml = rangesListHtml + "<option value=\"" + rangesNames[i].name + "\">" + rangesNames[i].name + "</option>"
-        }
-        document.getElementById("strzelnica").innerHTML = rangesListHtml;
     }
 }
 

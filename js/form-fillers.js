@@ -33,7 +33,7 @@ async function fillAllPersonsTable(Data) {
                 ],
             });
             $('#persons_table tbody').on('click', 'tr', function () {
-                load_person_form(-1);
+                load_person_form();
                 fillPersonForm(getPersonById(table.row(this).data().id_person));
             });
         });
@@ -84,7 +84,7 @@ async function fillAllClubsTable(Data) {
                 ],
             });
             $('#clubs_table tbody').on('click', 'tr', function () {
-                load_club_form(-1);
+                load_club_form();
                 fillClubForm(getClubById(table.row(this).data().id_club));
             });
         });
@@ -94,6 +94,7 @@ async function fillAllClubsTable(Data) {
 async function fillEventForm(Data) {
     Data.then((event) => {
         document.getElementById("nazwa").value = event.name;
+        document.getElementById("id_event").value = event.id_event;
         document.getElementById("opis").value = event.description;
         document.getElementById("oplata").value = event.entryFee;
         document.getElementById("strzelnica").value = event.range;
@@ -137,7 +138,7 @@ async function fillAllEventTable(Data) {
                 ],
             });
             $('#events_table tbody').on('click', 'tr', function () {
-                load_event_form(-1);
+                load_event_form();
                 fillEventForm(getEventById(table.row(this).data().id_event));
             });
         });
@@ -169,9 +170,20 @@ async function fillAllRangesTable(Data) {
                 ],
             });
             $('#ranges_table tbody').on('click', 'tr', function () {
-                load_range_form(-1);
+                load_range_form();
                 fillRangeForm(getRangeById(table.row(this).data().id_shootingrange));
             });
         });
     })
+}
+
+async function fillRangesNamesToEventRegistrationForm(rangesNames) {
+    rangesNames.then((rangesNamesData) => {
+        let rangesListHtml = "";
+        for (let i = 0; i < rangesNamesData.length; i++) {
+            rangesListHtml = rangesListHtml + "<option value=\"" + rangesNamesData[i].name + "\">" + rangesNamesData[i].name + "</option>"
+        }
+        document.getElementById("strzelnica").innerHTML = rangesListHtml;
+    })
+
 }
