@@ -1,9 +1,42 @@
-<!--<div class="form_submit_button">-->
-<!--    <label class="form_label"  for="id_club">Podaj ID </label>-->
-<!--    <input class="form_input" type="text" id="id_club" placeholder="Id">-->
-<!--    <input type="button" value="Znajdź klub" onclick="getClubById()">-->
-<!--</div>-->
 <form>
+    <script>
+        function enableAll() {
+            $("#nazwa").prop( "disabled", false );
+            $("#logo_klubu").prop( "disabled", false );
+            $("#email").prop( "disabled", false );
+            $("#opis").prop( "disabled", false );
+            $("#sport").prop( "disabled", false );
+            $("#szkolenia").prop( "disabled", false );
+            $("#rekreacja").prop( "disabled", false );
+        }
+
+        function disableAll() {
+            $("#nazwa").prop( "disabled", true );
+            $("#logo_klubu").prop( "disabled", true );
+            $("#email").prop( "disabled", true );
+            $("#opis").prop( "disabled", true );
+            $("#sport").prop( "disabled", true );
+            $("#szkolenia").prop( "disabled", true );
+            $("#rekreacja").prop( "disabled", true );
+        }
+
+        function setCreateClub() {
+            enableAll();
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitClubForm(methods.POST)\">");
+        }
+
+        function setReadClub() {
+            disableAll();
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateClub()\">");
+        }
+
+        function setUpdateClub() {
+            enableAll();
+            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitClubForm(methods.PATCH)\">\n" +
+                "        <input type=\"button\" value=\"Usuń\" onclick=\"submitClubForm(methods.DELETE)\">\n" +
+                "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadClub()\">");
+        }
+    </script>
 
     <div>
         <fieldset class="form_fieldset">
@@ -11,11 +44,12 @@
             <div class="form_row">
                 <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" disabled>
+                <input class="form_input" type="text" id="id_club" hidden>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label"  for="logo">Logo </label>
-                <input class="form_input" type="text" id="logo" disabled>
+                <label class="form_label"  for="logo_klubu">Logo </label>
+                <input class="form_input" type="text" id="logo_klubu" disabled>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
@@ -41,6 +75,7 @@
         </fieldset>
     </div>
 
-
+    <div class="form_submit_button" id="form_submit_button">
+    </div>
 
 </form>

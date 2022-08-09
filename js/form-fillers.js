@@ -1,5 +1,6 @@
 async function fillPersonForm(Data) {
     Data.then((person) => {
+        document.getElementById("id_person").value = person.id_person;
         document.getElementById("imie").value = person.name;
         document.getElementById("nazwisko").value = person.surname;
         document.getElementById("nick").value = person.nick;
@@ -33,7 +34,7 @@ async function fillAllPersonsTable(Data) {
                 ],
             });
             $('#persons_table tbody').on('click', 'tr', function () {
-                load_person_form();
+                load_person_form(loadType.READ);
                 fillPersonForm(getPersonById(table.row(this).data().id_person));
             });
         });
@@ -44,6 +45,7 @@ async function fillClubForm(Data) {
 
     Data.then((club) => {
         document.getElementById("nazwa").value =  club.name;
+        document.getElementById("id_club").value =  club.id_club;
         document.getElementById("opis").value = club.description;
         document.getElementById("email").value = club.email;
 
@@ -84,7 +86,7 @@ async function fillAllClubsTable(Data) {
                 ],
             });
             $('#clubs_table tbody').on('click', 'tr', function () {
-                load_club_form();
+                load_club_form(loadType.READ);
                 fillClubForm(getClubById(table.row(this).data().id_club));
             });
         });
@@ -105,7 +107,7 @@ async function fillEventForm(Data) {
 
         if (event.isCompetition === true) (document.getElementById("zawody").checked = true)
         if (event.isPractice === true) (document.getElementById("rekreacja").checked = true)
-        if (event.isCourse === true) (document.getElementById("szkolenie").checked = true)
+        if (event.isCourse === true) (document.getElementById("szkolenia").checked = true)
         if (event.openEntry === true) (document.getElementById("zapisy").checked = true)
         if (event.membersOnly === true) (document.getElementById("czlonkowie").checked = true)
     });
@@ -138,7 +140,7 @@ async function fillAllEventTable(Data) {
                 ],
             });
             $('#events_table tbody').on('click', 'tr', function () {
-                load_event_form();
+                load_event_form(loadType.READ);
                 fillEventForm(getEventById(table.row(this).data().id_event));
             });
         });
@@ -148,8 +150,10 @@ async function fillAllEventTable(Data) {
 async function fillRangeForm(Data) {
     Data.then((range) => {
         document.getElementById("nazwa").value = range.name;
+        document.getElementById("id_shootingrange").value = range.id_shootingrange;
         document.getElementById("opis").value = range.description;
         document.getElementById("adres").value = range.adress;
+        console.log(range);
     });
 }
 
@@ -170,7 +174,7 @@ async function fillAllRangesTable(Data) {
                 ],
             });
             $('#ranges_table tbody').on('click', 'tr', function () {
-                load_range_form();
+                load_range_form(loadType.READ);
                 fillRangeForm(getRangeById(table.row(this).data().id_shootingrange));
             });
         });

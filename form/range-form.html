@@ -1,15 +1,42 @@
 <form>
-<!--    <div class="form_submit_button">-->
-<!--        <label class="form_label" for="id_range">Podaj ID </label>-->
-<!--        <input class="form_input" type="text" id="id_range" placeholder="Id">-->
-<!--        <input type="button" value="Znajdź strzelnice" onclick="findRangeById()">-->
-<!--    </div>-->
+    <script>
+        function enableAll() {
+            $("#nazwa").prop( "disabled", false );
+            $("#adres").prop( "disabled", false );
+            $("#opis").prop( "disabled", false );
+        }
+
+        function disableAll() {
+            $("#nazwa").prop( "disabled", true );
+            $("#adres").prop( "disabled", true );
+            $("#opis").prop( "disabled", true );
+        }
+
+        function setCreateRange() {
+            enableAll();
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitRangeForm(methods.POST)\">");
+        }
+
+        function setReadRange() {
+            disableAll();
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateRange()\">");
+        }
+
+        function setUpdateRange() {
+            enableAll();
+            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitRangeForm(methods.PATCH)\">\n" +
+                "        <input type=\"button\" value=\"Usuń\" onclick=\"submitRangeForm(methods.DELETE)\">\n" +
+                "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadRange()\">");
+        }
+    </script>
+
     <div>
         <fieldset class="form_fieldset">
             <legend>Dane strzelnicy</legend>
             <div class="form_row">
                 <label class="form_label" for="nazwa">Nazwa </label>
                 <input class="form_input" type="text" id="nazwa" placeholder="Nazwa" disabled>
+                <input class="form_input" type="text" id="id_shootingrange" hidden>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
@@ -23,6 +50,9 @@
                 <div class="clear_both"></div>
             </div>
         </fieldset>
+    </div>
+
+    <div class="form_submit_button" id="form_submit_button">
     </div>
 
 </form>

@@ -44,7 +44,7 @@ async function getClubsByPersonId(id) {
 async function getAllClubs() {
     let Url = 'http://localhost:8080/club/all';
     let clubs = await httpRequestGet(Url);
-    // console.log(Data);
+    console.log(clubs);
     return clubs;
 }
 

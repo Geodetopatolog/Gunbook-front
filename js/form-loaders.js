@@ -1,12 +1,30 @@
-function load_person_registration_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.CREATE_PERSON)) {
-        $("#main").load("form/person-registration-form.html");
-    }
+const loadType = {
+    "CREATE": "create",
+    "UPDATE": "update",
+    "READ": "read",
+    "DETELE": "delete"
 }
 
-function load_person_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/person-form.html");
+function load_person_form(type) {
+    switch (type) {
+        case "create":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/person-form.html", function () {
+                    setCreatePerson();
+                });
+            }
+        }
+            break;
+
+        case "read":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/person-form.html", function () {
+                    setReadPerson();
+                });
+            }
+        }
     }
 }
 
@@ -26,15 +44,27 @@ function load_all_persons_form() {
     }
 }
 
-function load_club_registration_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/club-registration-form.html");
-    }
-}
+function load_club_form(type) {
 
-function load_club_form(index) {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-       $("#main").load("form/club-form.html");
+    switch (type) {
+        case "create":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/club-form.html", function () {
+                    setCreateClub();
+                });
+            }
+        }
+            break;
+
+        case "read":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/club-form.html", function () {
+                    setReadClub();
+                });
+            }
+        }
     }
 }
 
@@ -54,17 +84,27 @@ function load_all_clubs_form() {
     }
 }
 
-function load_event_registration_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/event-registration-form.html");
-        fillRangesNamesToEventRegistrationForm(getRangesNames());
+async function load_event_form(type) {
 
-    }
-}
+    switch (type) {
+        case "create":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/event-form.html", function () {
+                    setCreateEvent();
+                });
+            }
+        }
+        break;
 
-function load_event_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/event-form.html");
+        case "read":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/event-form.html", function () {
+                    setReadEvent();
+                });
+            }
+        }
     }
 }
 
@@ -84,15 +124,27 @@ function load_all_events_form() {
     }
 }
 
-function load_range_registration_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/range-registration-form.html");
-    }
-}
+function load_range_form(type) {
 
-function load_range_form() {
-    if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-        $("#main").load("form/range-form.html");
+    switch (type) {
+        case "create":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/range-form.html", function () {
+                    setCreateRange();
+                });
+            }
+        }
+            break;
+
+        case "read":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/range-form.html", function () {
+                    setReadRange();
+                });
+            }
+        }
     }
 }
 
@@ -102,7 +154,6 @@ function load_all_ranges_form() {
         fillAllRangesTable(getAllRanges());
     }
 }
-
 
 function load_login_form() {
     // if (hasPermission(authority, actions.VIEW_PERSON))

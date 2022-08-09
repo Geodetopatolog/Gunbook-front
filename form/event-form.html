@@ -5,15 +5,16 @@
 <!--</div>-->
 
 <script>
-    function enableEditing() {
-        $("#form_edit_enable").html(" <input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.PATCH)\">");
+
+    function enableAll() {
         $("#strzelnica_div").html("<select id=\"strzelnica\"><option value=\"brak\">brak</option></select>");
+        $("#nazwa").prop( "disabled", false );
         $("#dziens").prop( "disabled", false );
         $("#godzinas").prop( "disabled", false );
         $("#dzienk").prop( "disabled", false );
         $("#godzinak").prop( "disabled", false );
         $("#zawody").prop( "disabled", false );
-        $("#szkolenie").prop( "disabled", false );
+        $("#szkolenia").prop( "disabled", false );
         $("#rekreacja").prop( "disabled", false );
         $("#czlonkowie").prop( "disabled", false );
         $("#zapisy").prop( "disabled", false );
@@ -24,6 +25,48 @@
         $("#opis").prop( "disabled", false );
         fillRangesNamesToEventRegistrationForm(getRangesNames());
     }
+
+    function disableAll() {
+        $("#strzelnica_div").html("<div id=\"strzelnica_div\"><input class=\"form_input\" type=\"text\" id=\"strzelnica\" disabled></div>");
+        $("#nazwa").prop( "disabled", true );
+        $("#dziens").prop( "disabled", true );
+        $("#godzinas").prop( "disabled", true );
+        $("#dzienk").prop( "disabled", true );
+        $("#godzinak").prop( "disabled", true );
+        $("#zawody").prop( "disabled", true );
+        $("#szkolenia").prop( "disabled", true );
+        $("#rekreacja").prop( "disabled", true );
+        $("#czlonkowie").prop( "disabled", true );
+        $("#zapisy").prop( "disabled", true );
+        $("#pistolet").prop( "disabled", true );
+        $("#karabin").prop( "disabled", true );
+        $("#strzelba").prop( "disabled", true );
+        $("#oplata").prop( "disabled", true );
+        $("#opis").prop( "disabled", true );
+    }
+
+    function setCreateEvent() {
+        enableAll();
+        $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitEventForm(methods.POST)\">");
+    }
+
+    function setReadEvent() {
+        disableAll();
+        $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateEvent()\">");
+    }
+
+    function setUpdateEvent() {
+        enableAll();
+        $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.PATCH)\">\n" +
+            "        <input type=\"button\" value=\"Usuń\" onclick=\"submitEventForm(methods.DELETE)\">\n" +
+            "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadEvent()\">");
+    }
+
+    // function setDeleteEvent() {
+    //     $("#form_submit_button").html(" <input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.DELETE)\">");
+    // }
+
+
 </script>
 
 <form>
@@ -61,7 +104,7 @@
                     <fieldset class="form_fieldset">
                         <legend>Typ wydarzenia</legend>
                         <div><label><input type="checkbox" name="Typ" value="Zawody" id="zawody" disabled>Zawody sportowe</label></div>
-                        <div><label><input type="checkbox" name="Typ" value="Szkolenie" id="szkolenie" disabled>Szkolenie</label></div>
+                        <div><label><input type="checkbox" name="Typ" value="Szkolenia" id="szkolenia" disabled>Szkolenia</label></div>
                         <div><label><input type="checkbox" name="Typ" value="Rekreacja" id="rekreacja" disabled>Rekreacja</label></div>
                     </fieldset>
                 </div>
@@ -97,8 +140,8 @@
         </fieldset>
 
     </div>
-    <div class="form_submit_button" id="form_edit_enable">
-        <input type="button" value="Edytuj" onclick="enableEditing()">
+    <div class="form_submit_button" id="form_submit_button">
+<!--        <input type="button" value="Edytuj" onclick="setUpdateEvent()">-->
     </div>
 
 

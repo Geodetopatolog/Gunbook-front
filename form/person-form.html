@@ -1,9 +1,75 @@
 <form>
-<!--    <div class="form_submit_button">-->
-<!--        <label class="form_label" for="id_person">Podaj ID </label>-->
-<!--        <input class="form_input" type="text" id="id_person" placeholder="Id">-->
-<!--        <input type="button" value="Znajdź kolesia" onclick="fillPersonForm(getPersonById(-1))">-->
-<!--    </div>-->
+    <script>
+
+        function enableAll() {
+            $("#imie").prop( "disabled", false );
+            $("#nazwisko").prop( "disabled", false );
+            $("#nick").prop( "disabled", false );
+            $("#email").prop( "disabled", false );
+            $("#opis").prop( "disabled", false );
+
+            $("#login").prop( "disabled", false );
+            $("#pass1").prop( "disabled", false );
+            $("#pass2").prop( "disabled", false );
+        }
+
+        function disableAll() {
+            $("#imie").prop( "disabled", true );
+            $("#nazwisko").prop( "disabled", true );
+            $("#nick").prop( "disabled", true );
+            $("#email").prop( "disabled", true );
+            $("#opis").prop( "disabled", true );
+
+            $("#login").prop( "disabled", true );
+            $("#pass1").prop( "disabled", true );
+            $("#pass2").prop( "disabled", true );
+        }
+
+        function enableLoginData() {
+            $("#loginData").html("<fieldset class=\"form_fieldset\">\n" +
+                "                <legend>Podaj dane do logowania</legend>\n" +
+                "                <div class=\"form_row\">\n" +
+                "                    <label class=\"form_label\" for=\"login\">Login </label>\n" +
+                "                    <input class=\"form_input\" type=\"text\" id=\"login\" placeholder=\"Login\">\n" +
+                "                    <div class=\"clear_both\"></div>\n" +
+                "                </div>\n" +
+                "                <div class=\"form_row\">\n" +
+                "                    <label class=\"form_label\" for=\"pass1\">Hasło </label>\n" +
+                "                    <input class=\"form_input\" type=\"password\" id=\"pass1\">\n" +
+                "                    <div class=\"clear_both\"></div>\n" +
+                "                </div>\n" +
+                "                <div class=\"form_row\">\n" +
+                "                    <label class=\"form_label\" for=\"pass2\">Powtórz hasło </label>\n" +
+                "                    <input class=\"form_input\" type=\"password\" id=\"pass2\">\n" +
+                "                    <div class=\"clear_both\"></div>\n" +
+                "                </div>\n" +
+                "            </fieldset>");
+        }
+
+        function disableLoginData() {
+            $("#logiData").html("");
+        }
+
+        function setCreatePerson() {
+            enableAll();
+            enableLoginData()
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitPersonForm(methods.POST)\">");
+        }
+
+        function setReadPerson() {
+            disableAll();
+            disableLoginData()
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdatePerson()\">");
+        }
+        //todo dorobić zmianę hasła
+        function setUpdatePerson() {
+            enableAll();
+            disableLoginData()
+            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitPersonForm(methods.PATCH)\">\n" +
+                "        <input type=\"button\" value=\"Usuń\" onclick=\"submitPersonForm(methods.DELETE)\">\n" +
+                "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadPerson()\">");
+        }
+    </script>
 
     <div>
         <fieldset class="form_fieldset">
@@ -11,6 +77,7 @@
             <div class="form_row">
                 <label class="form_label" for="imie">Imię </label>
                 <input class="form_input" type="text" id="imie" disabled>
+                <input class="form_input" type="text" id="id_person" hidden>
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
@@ -36,18 +103,17 @@
             <div class="form_row">
                 <label class="form_label" for="kluby">Kluby </label>
                 <div id="kluby"></div>
-<!--                <li><a onclick="load_club_form()">klub strzelajacych inaczej</a></li>-->
                 <div class="clear_both"></div>
             </div>
 
         </fieldset>
+
+        <div id="loginData">
+        </div>
+
     </div>
 
-
-
-
-
-
-
+    <div class="form_submit_button" id="form_submit_button">
+    </div>
 
 </form>

@@ -61,21 +61,21 @@
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Checkbox" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
-        <li><input type="button" value="Formularz osobowy" onclick="load_person_registration_form()"></li>
-        <li><input type="button" value="Podgląd osoby" onclick="load_person_form()"></li>
+        <li><input type="button" value="Formularz osobowy" onclick="load_person_form(loadType.CREATE)"></li>
+        <li><input type="button" value="Podgląd osoby" onclick="load_person_form(loadType.READ)"></li>
         <li><input type="button" value="Mój profil" onclick="load_logged_person_form()"></li>
 
-        <li><input type="button" value="Formularz klubu" onclick="load_club_registration_form()"></li>
-        <li><input type="button" value="Podgląd klubu" onclick="load_club_form()"></li>
+        <li><input type="button" value="Formularz klubu" onclick="load_club_form(loadType.CREATE)"></li>
+        <li><input type="button" value="Podgląd klubu" onclick="load_club_form(loadType.READ)"></li>
         <li><input type="button" value="Kluby - członek" onclick="load_logged_person_club_form()"></li>
         <li><input type="button" value="Kluby - właściciel" onclick="load_logged_person_club_form()"></li>
 
-        <li><input type="button" value="Formularz eventu" onclick="load_event_registration_form()"></li>
-        <li><input type="button" value="Podgląd eventu" onclick="load_event_form()"></li>
+        <li><input type="button" value="Formularz eventu" onclick="load_event_form(loadType.CREATE)"></li>
+        <li><input type="button" value="Podgląd eventu" onclick="load_event_form(loadType.READ)"></li>
         <li><input type="button" value="Moje eventy" onclick="load_logged_person_joined_event_form()"></li>
 
-        <li><input type="button" value="Formularz strzelnicy" onclick="load_range_registration_form()"></li>
-        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form()"></li>
+        <li><input type="button" value="Formularz strzelnicy" onclick="load_range_form(loadType.CREATE)"></li>
+        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form(loadType.READ)"></li>
 
         <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>
         <li><input type="button" value="Wyloguj" onclick="logout()"></li>

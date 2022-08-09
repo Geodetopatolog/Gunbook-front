@@ -1,14 +1,4 @@
-// function sleep(ms) {
-//     return new Promise(resolve => setTimeout(resolve, ms));
-// }
 //todo nie przechowywać tokena w pamięci lokalnej, bo go ktoś zajuma :(
-
-// let JWT = localStorage.getItem("JWT");
-// let authority = localStorage.getItem("authority");
-//
-// let loggedUserId = localStorage.getItem("loggedUserId");
-//
-
 
 const methods = {
     GET: "GET",
@@ -16,7 +6,6 @@ const methods = {
     PATCH: "PATCH",
     DELETE: "DELETE"
 }
-
 
 function displayRadioValue() {
     document.getElementById("result").innerHTML = "";
@@ -42,7 +31,7 @@ function setSameValueOnEventDate() {
     document.getElementById("dzienk").value = document.getElementById("dziens").value;
 }
 
-async function httpRequestPostPatchDelete(url, body, method) {
+async function httpRequestPostPatch(url, body, method) {
     console.log(method);
     let params = {
         headers:{
@@ -62,17 +51,34 @@ async function httpRequestPostPatchDelete(url, body, method) {
 
 async function httpRequestGet(Url) {
 
-    let Params = {
+    let params = {
         headers:{
             'Content-Type': "application/json",
             'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
         },
         method: "GET"
     }
-    console.log(Params);
-    let res = await fetch(Url, Params);
+    console.log(params);
+    let res = await fetch(Url, params);
     console.log(res);
     return await res.json();
+}
+
+async function httpRequestDelete(url, fillFunction) {
+    let params = {
+        headers:{
+            'Content-Type': "application/json",
+            'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
+        },
+        method: "DELETE"
+    }
+
+    fetch(url, params)
+     //   .then(response => response.statusText)
+        .then(a => {
+            fillFunction();
+        });
+
 }
 
 async function login(username, password) {
@@ -93,7 +99,6 @@ async function login(username, password) {
 
     let res = await fetch(Url, Params);
     let log = await res.json();
-
 
     localStorage.setItem("JWT", log.jwt);
     localStorage.setItem("authority", parseJwt(log.jwt).grantedAuthority);
