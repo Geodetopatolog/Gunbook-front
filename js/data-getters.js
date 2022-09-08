@@ -2,101 +2,107 @@
 //id=-1 jest jako obsługa zapytania do bazy na podstawie wprowadzonego w pole na stronie id - zapewne do wywalenia po wprowadzeniu tablic ze wszystkimi wpisami w bazie
 async function getPersonById(id) {
 
-    let Url = 'http://localhost:8080/person?id_person=';
-
-    if (id===-1) {
-        Url = Url + document.getElementById("id_person").value;
-    } else {
+    let Url = url.PERSON + '?id_person=';
         Url = Url + id.toString();
-    }
+
     let person = await httpRequestGet(Url);
     return person;
 }
 
 async function getAllPersons() {
-    let Url = 'http://localhost:8080/person/all';
-    // console.log(Data);
+    let Url = url.PERSONS;
     let persons = await httpRequestGet(Url);
     return persons;
 }
 
 async function getClubById(id) {
-    let Url = 'http://localhost:8080/club?id_club=';
-
-    if (id===-1) {
-        Url = Url + document.getElementById("id_club").value;
-    } else {
+    let Url = url.CLUB + '?id_club=';
         Url = Url + id.toString();
-    }
+
     let club = await httpRequestGet(Url);
     return club;
 }
 
 async function getClubsByPersonId(id) {
-    let Url = 'http://localhost:8080/person/clubs?id_person=';
+    let Url = url.PERSON_JOINED_CLUBS + '?id_person=';
     Url = Url + id.toString();
     let clubs = await httpRequestGet(Url);
-    //todo wykasować, jak nie bedzie potrzebne :) albo zmienić, żeby przechowywać samo id, się zobaczy
-    localStorage.setItem("loggedUserClubs", JSON.stringify(clubs));
      return clubs;
 }
 
-async function getAllClubs() {
-    let Url = 'http://localhost:8080/club/all';
+async function getClubsOwnedByPersonId(id) {
+    let Url = url.PERSON_OWNED_CLUBS + '?id_person=';
+    Url = Url + id.toString();
     let clubs = await httpRequestGet(Url);
-    console.log(clubs);
     return clubs;
 }
 
-async function getEventById(id) {
-    let Url = 'http://localhost:8080/event?id_event=';
+async function getAllClubs() {
+    let Url = url.CLUBS;
+    let clubs = await httpRequestGet(Url);
+    return clubs;
+}
 
-    if (id===-1) {
-        Url = Url + document.getElementById("id_event").value;
-    } else {
+async function getAllClubMembersByClubId(id) {
+    let Url = url.CLUB_MEMBERS + "?id_club=";
+    Url = Url + id.toString();
+    let members = await httpRequestGet(Url);
+    return members;
+}
+
+async function getAllEventsByClubId(id) {
+    let Url = url.CLUB_EVENTS + "?id_club=";
+    Url = Url + id.toString();
+    let events = await httpRequestGet(Url);
+    return events;
+}
+
+async function getAllRangesByClubId(id) {
+    let Url = url.CLUB_RANGES + "?id_club=";
+    Url = Url + id.toString();
+    let ranges = await httpRequestGet(Url);
+    return ranges;
+}
+
+
+async function getEventById(id) {
+    let Url = url.EVENT + '?id_event=';
         Url = Url + id.toString();
-    }
+
     let event = await httpRequestGet(Url);
-    // console.log(Data);
     return event;
 }
 
 async function getAllEvents() {
-    let Url = 'http://localhost:8080/event/all';
+    let Url = url.EVENTS;
     let events = await httpRequestGet(Url);
-    // console.log(Data);
     return events;
 }
 
 async function getEventsJoinedByPersonId(id) {
-    let Url = 'http://localhost:8080/person/joined_events?id_person=';
-    Url = Url + id.toString();
+    let Url = url.PERSON_JOINED_EVENTS + '?id_person=';
+        Url = Url + id.toString();
 
     let events = await httpRequestGet(Url);
-    fillEventForm(events);
+    return events;
 }
 
 async function getRangeById(id) {
-    let Url = 'http://localhost:8080/range?id_range=';
-
-    if (id===-1) {
-        Url = Url + document.getElementById("id_event").value;
-    } else {
+    let Url = url.RANGE + '?id_range=';
         Url = Url + id.toString();
-    }
+
     let range = await httpRequestGet(Url);
     return range;
 }
 
 async function getAllRanges() {
-    let Url = 'http://localhost:8080/range/all';
+    let Url = url.RANGES;
     let ranges = await httpRequestGet(Url);
     return ranges;
 }
 
 async function getRangesNames() {
-    let Url = 'http://localhost:8080/range/ranges_names';
-
+    let Url = url.RANGES_NAMES;
     let rangesNames = await httpRequestGet(Url);
     return rangesNames;
 }

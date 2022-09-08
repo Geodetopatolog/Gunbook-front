@@ -1,7 +1,13 @@
 body
 {
-    background-color: #3d3939;
+    background-color: #3b4147;
     color: #ffffff;
+    font-family: 'Saira Stencil One', cursive;
+}
+
+.button {
+    font-family : inherit;
+    font-size: 1em;
 }
 
 .row
@@ -23,27 +29,17 @@ body
     display: inline-block;
 }
 
-/*.ak*/
-/*{*/
-/*    transition: transform 100ms;*/
-/*}*/
-
-/*.ar*/
-/*{*/
-/*    transition: transform 100ms;*/
-/*}*/
 
 h1.logo
 {
     float: left;
-    font-size: 40px;
+    font-size: 50px;
     font-weight:  700;
     color: cornflowerblue;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-top: 0;
-    margin-bottom: 15px;
+    letter-spacing: 7px;
+    margin: 0px 10px 0px;
 }
 
 nav
@@ -128,7 +124,7 @@ main
 {
     overflow: hidden;
     border: 2px solid orangered;
-    width: border-box;
+    /*width: border-box;*/
     padding: 10px;
 
 }
@@ -160,6 +156,8 @@ footer
 {
     float: left;
     background-color: white;
+    font-family : inherit;
+    font-size: 1em;
 }
 
 .form_label

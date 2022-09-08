@@ -1,11 +1,5 @@
 //todo nie przechowywać tokena w pamięci lokalnej, bo go ktoś zajuma :(
 
-const methods = {
-    GET: "GET",
-    POST: "POST",
-    PATCH: "PATCH",
-    DELETE: "DELETE"
-}
 
 function displayRadioValue() {
     document.getElementById("result").innerHTML = "";
@@ -49,6 +43,22 @@ async function httpRequestPostPatch(url, body, method) {
         });
 }
 
+async function httpRequestPostPersonRegistrationForm(url, body) {
+    let params = {
+        headers:{
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(body),
+        method: "POST"
+    }
+
+    fetch(url, params)
+        .then(response => response.statusText)
+        .then(data => {
+            console.log('sukces:', data)
+        });
+}
+
 async function httpRequestGet(Url) {
 
     let params = {
@@ -82,7 +92,7 @@ async function httpRequestDelete(url, fillFunction) {
 }
 
 async function login(username, password) {
-    let Url = 'http://localhost:8080/authenticate';
+    let Url = url.LOGIN;
     let Data = {
         "username": username,
         "password": password
@@ -101,24 +111,38 @@ async function login(username, password) {
     let log = await res.json();
 
     localStorage.setItem("JWT", log.jwt);
-    localStorage.setItem("authority", parseJwt(log.jwt).grantedAuthority);
-    localStorage.setItem("loggedUserId", parseJwt(log.jwt).loggedUserId);
+    localStorage.setItem("authority", log.role);
+    localStorage.setItem("loggedUserId", JSON.stringify(log.loggedUserId));
+    localStorage.setItem("loggedUserClubsIds", JSON.stringify(log.loggedUserClubsIds));
+    localStorage.setItem("loggedUserOwnedClubsIds", JSON.stringify(log.loggedUserOwnedClubsIds));
+    localStorage.setItem("loggedUserJoinedEventsIds", JSON.stringify(log.loggedUserJoinedEventsIds));
+    localStorage.setItem("loggedUserAppliedClubsIds", JSON.stringify(log.loggedUserAppliedClubsIds));
+    localStorage.setItem("loggedUserAppliedEventsIds", JSON.stringify(log.loggedUserAppliedEventsIds));
 
+
+    console.log(parseJwt(log.jwt).id);
     console.log("localStorage JWT " + localStorage.getItem("JWT"));
     console.log("localStorage authority " + localStorage.getItem("authority"));
     console.log("localStorage loggedUserId " + localStorage.getItem("loggedUserId"));
+    console.log("localStorage loggedUserClubsIds " + JSON.parse(localStorage.getItem("loggedUserClubsIds")));
+    console.log("localStorage loggedUserOwnedClubsIds " + JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds")));
+    console.log("localStorage loggedUserJoinedEventsIds " + JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds")));
+    console.log("localStorage loggedUserAppliedClubsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds")));
+    console.log("localStorage loggedUserAppliedEventsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds")));
+
+    load_logged_person_form();
 }
 
 function logout() {
-    localStorage.setItem("JWT", "");
+
+    localStorage.clear();
     localStorage.setItem("authority", "GUEST");
-    localStorage.setItem("loggedUserId", "");
+    load_starter_page();
 }
 
 function submitLoginForm() {
 
     login(document.getElementById("login").value, document.getElementById("pass1").value);
-
 }
 
 function parseJwt (token) {

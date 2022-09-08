@@ -50,9 +50,19 @@
         $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitEventForm(methods.POST)\">");
     }
 
-    function setReadEvent() {
+    function setReadOnlyEvent() {
         disableAll();
-        $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateEvent()\">");
+        $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz się!\" onclick=\"submitEventRequestByParticipantForm()\">");
+    }
+
+    function setReadJoinedEvent() {
+        disableAll();
+        $("#form_submit_button").html(" <input type=\"button\" value=\"Zrezygnuj z udziału\" onclick=\"submitEventLeaveByParticipantForm()\">");
+    }
+
+    function setReadRequestedEvent() {
+        disableAll();
+        $("#form_submit_button").html(" <input type=\"button\" value=\"Anuluj proźbę o dołączenie\" onclick=\"submitEventRequestByParticipantDeleteForm()\">");
     }
 
     function setUpdateEvent() {

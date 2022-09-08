@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Portal strzelecki</title>
+    <title>Gunbook</title>
     <link rel="stylesheet" href="stylesheet/style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet/jquery.dataTables.css">
     <link rel="stylesheet" href="stylesheet/fixedColumns.dataTables.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
 
 <!--    <link rel="stylesheet" href="form/person-form.html">-->
 <!--    <link rel="stylesheet" href="form/person-registration-form.html">-->
@@ -15,6 +18,7 @@
     <![endif]-->
 
     <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/const.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/form-loaders.js"></script>
     <script src="js/form-submiters.js"></script>
@@ -28,13 +32,13 @@
 
 </head>
 
-<body>
+<body onload="load_starter_page()">
 
 <header>
     <div class="baner">
         <ul >
             <li><img class="ak" id="ak" src="img/ak%20bolt%20face.png" width="80"></li>
-            <li><h1 class="logo" id="logo">Portal strzelecki</h1></li>
+            <li><h1 class="logo" id="logo">Gunbook</h1></li>
             <li><img class="ar" id="ar" src="img/ar%20bolt%20face.png" width="80"></li>
         </ul>
     </div>
@@ -53,6 +57,11 @@
 <!--lewy panel-->
 <aside class="sidemenu" onclick="randomAnimation()">
     <ul>
+        <li><input type="button" class="button" value="Mój profil" onclick="load_logged_person_form()"></li>
+        <li><input type="button" class="button" value="Moje kluby" onclick="load_logged_person_clubs_form()"></li>
+<!--        todo jakoś to ładnie nazwać-->
+        <li><input type="button" class="button" value="Moje eventy" onclick="load_logged_person_events_form()"></li>
+
         <li><a href="#">Mój profil</a></li>
         <li><a href="#">Mój klub</a></li>
         <li><a href="#">Moje wydarzenia</a></li>
@@ -61,24 +70,23 @@
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Checkbox" onclick="randomAnimation()"></li>-->
 <!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
-        <li><input type="button" value="Formularz osobowy" onclick="load_person_form(loadType.CREATE)"></li>
-        <li><input type="button" value="Podgląd osoby" onclick="load_person_form(loadType.READ)"></li>
-        <li><input type="button" value="Mój profil" onclick="load_logged_person_form()"></li>
+<!--        <li><input type="button" value="Formularz osobowy" onclick="load_person_form(loadType.CREATE)"></li>-->
+<!--        <li><input type="button" value="Podgląd osoby" onclick="load_person_form(loadType.READ)"></li>-->
 
-        <li><input type="button" value="Formularz klubu" onclick="load_club_form(loadType.CREATE)"></li>
-        <li><input type="button" value="Podgląd klubu" onclick="load_club_form(loadType.READ)"></li>
-        <li><input type="button" value="Kluby - członek" onclick="load_logged_person_club_form()"></li>
-        <li><input type="button" value="Kluby - właściciel" onclick="load_logged_person_club_form()"></li>
 
-        <li><input type="button" value="Formularz eventu" onclick="load_event_form(loadType.CREATE)"></li>
-        <li><input type="button" value="Podgląd eventu" onclick="load_event_form(loadType.READ)"></li>
-        <li><input type="button" value="Moje eventy" onclick="load_logged_person_joined_event_form()"></li>
+<!--        <li><input type="button" value="Formularz klubu" onclick="load_club_form(loadType.CREATE)"></li>-->
+<!--        <li><input type="button" value="Podgląd klubu" onclick="load_club_form(loadType.READ)"></li>-->
 
-        <li><input type="button" value="Formularz strzelnicy" onclick="load_range_form(loadType.CREATE)"></li>
-        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form(loadType.READ)"></li>
 
-        <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>
-        <li><input type="button" value="Wyloguj" onclick="logout()"></li>
+        <li><input type="button" class="button" value="Formularz eventu" onclick="load_event_form(loadType.CREATE)"></li>
+<!--        <li><input type="button" value="Podgląd eventu" onclick="load_event_form(loadType.READ)"></li>-->
+
+
+        <li><input type="button" class="button" value="Formularz strzelnicy" onclick="load_range_form(loadType.CREATE)"></li>
+<!--        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form(loadType.READ)"></li>-->
+
+<!--        <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>-->
+        <li><input type="button" class="button" value="Wyloguj" onclick="logout()"></li>
 
 
 

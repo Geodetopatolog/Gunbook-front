@@ -22,20 +22,117 @@
 
         function setCreateClub() {
             enableAll();
+            $("#czlonkowie-ilosc").hide();
+            $("#czlonkowie-lista").hide();
+            $("#relatedDataPanel").hide();
+            $("#create_event_button").hide();
+            $("#relatedDataLists").hide();
+
             $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitClubForm(methods.POST)\">");
         }
 
-        function setReadClub() {
+        //widzi inych członków, nie może edytować
+        function setReadMemberClub() {
             disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").show();
+            $("#relatedDataPanel").show();
+            // $("#relatedDataLists").show();
+            $("#create_event_button").hide();
+            $("#form_submit_button").html("");
+        }
+
+        //widzi innych członków i może edytować
+        function setReadOwnerClub() {
+            disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").show();
+            $("#relatedDataPanel").show();
+            // $("#relatedDataLists").show();
+            $("#create_event_button").show();
             $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateClub()\">");
+        }
+
+        //widzi tylko liczbę członków, nie może edytować
+        function setReadOnlyClub() {
+            disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").hide();
+            $("#relatedDataPanel").hide();
+            $("#relatedDataLists").hide();
+            $("#create_event_button").hide();
+            $("#form_submit_button").html("");
         }
 
         function setUpdateClub() {
             enableAll();
+            $("#czlonkowie-ilosc").hide();
+            $("#czlonkowie-lista").hide();
+            $("#relatedDataPanel").hide();
+            $("#relatedDataLists").hide();
+            $("#create_event_button").hide();
             $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitClubForm(methods.PATCH)\">\n" +
                 "        <input type=\"button\" value=\"Usuń\" onclick=\"submitClubForm(methods.DELETE)\">\n" +
                 "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadClub()\">");
         }
+        function prepareForCreatingEvent() {
+            localStorage.setItem("eventOrganizerClubId", $("#id_club").val());
+            load_event_form(loadType.CREATE);
+        }
+
+        function showAllMembers() {
+            $("#relatedDataLists").show();
+            $("#czlonkowie-lista").show();
+            $("#eventy-lista").hide();
+            $("#strzelnice-lista").hide();
+            $("#relatedDataLegend").text("Członkowie");
+            $("#czlonkowieButton").prop('disabled', true);
+            $("#eventyButton").prop('disabled', false);
+            $("#strzelniceButton").prop('disabled', false);
+        }
+
+        function showAllEvents() {
+            $("#relatedDataLists").show();
+            $("#czlonkowie-lista").hide();
+            $("#eventy-lista").show();
+            $("#strzelnice-lista").hide();
+            $("#relatedDataLegend").text("Eventy");
+            $("#czlonkowieButton").prop('disabled', false);
+            $("#eventyButton").prop('disabled', true);
+            $("#strzelniceButton").prop('disabled', false);
+        }
+
+        function showAllShootingranges() {
+            $("#relatedDataLists").show();
+            $("#czlonkowie-lista").hide();
+            $("#eventy-lista").hide();
+            $("#strzelnice-lista").show();
+            $("#relatedDataLegend").text("Strzelnice");
+            $("#czlonkowieButton").prop('disabled', false);
+            $("#eventyButton").prop('disabled', false);
+            $("#strzelniceButton").prop('disabled', true);
+        }
+
+
+        function initializeClubForm() {
+             $("#relatedDataLists").hide();
+            $("#czlonkowie-lista").load("form/all-persons-list.html", function() {
+                // setReadClubsForm();
+                $("#czlonkowie-lista").hide();
+                $("#czlonkowieButton").prop('disabled', false);
+            });
+            $("#eventy-lista").load("form/all-events-list.html", function() {
+                $("#eventy-lista").hide();
+                $("#eventyButton").prop('disabled', false);
+            });
+            $("#strzelnice-lista").load("form/all-ranges-list.html", function() {
+                $("#strzelnice-lista").hide();
+                $("#strzelniceButton").prop('disabled', false);
+            });
+
+        }
+
+
     </script>
 
     <div>
@@ -63,6 +160,11 @@
                 <div class="clear_both"></div>
             </div>
 
+            <div class="form_row" id="czlonkowie-ilosc">
+                <label class="form_label" for="czlonkowie">Ilość członków </label>
+                <input class="form_input" type="text" id="czlonkowie" disabled>
+            </div>
+
         </fieldset>
 
         <fieldset class="form_fieldset">
@@ -73,9 +175,34 @@
                 <div><label><input type="checkbox" name="Typ" value="Rekreacja" id="rekreacja" disabled>Rekreacja</label></div>
             </div>
         </fieldset>
+
+
+
+        <div class="form_row" id="relatedDataPanel">
+            <input type="button" id="czlonkowieButton" value="Członkowie" onclick="showAllMembers()">
+            <input type="button" id="eventyButton" value="Eventy" onclick="showAllEvents()">
+            <input type="button" id="strzelniceButton" value="Strzelnice" onclick="showAllShootingranges()">
+        </div>
+
+                <fieldset class="form_fieldset" id="relatedDataLists">
+                    <legend id="relatedDataLegend">Członkowie</legend>
+                    <div class="form_row" id="czlonkowie-lista"></div>
+                    <div class="form_row" id="eventy-lista"> </div>
+                    <div class="form_row" id="strzelnice-lista"></div>
+                </fieldset>
+
+
+
+
+
     </div>
 
     <div class="form_submit_button" id="form_submit_button">
     </div>
+
+    <div class="form_submit_button" id="create_event_button">
+        <input type="button" value="Utwórz nowy event" onclick="prepareForCreatingEvent()">
+    </div>
+
 
 </form>

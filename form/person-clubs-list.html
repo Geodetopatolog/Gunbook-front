@@ -1,35 +1,98 @@
+<script>
+
+  function setOwnedClubsForm() {
+      $("#lista-klubow-czlonek").hide();
+      $("#lista-klubow-wlasciciel").show();
+      $("#personClubsDataLegend").text("Właściciel");
+      $("#czlonekButton").prop('disabled', false);
+      $("#wlascicielButton").prop('disabled', true);
+  }
+
+  function setJoinedClubsForm() {
+      $("#lista-klubow-czlonek").show();
+      $("#lista-klubow-wlasciciel").hide();
+      $("#personClubsDataLegend").text("Członek");
+      $("#czlonekButton").prop('disabled', true);
+      $("#wlascicielButton").prop('disabled', false);
+  }
+
+  function setReadClubsForm() {
+    $('#clubCreation').html("");
+  }
+
+  function initializePersonClubsForm() {
+    $("#lista-klubow-wlasciciel").load("form/all-clubs-list.html", function() {
+      $("#clubs_table").attr("id","owned_clubs")
+        $("#lista-klubow-czlonek").load("form/all-clubs-list.html", function() {
+          $("#clubs_table").attr("id","joined_clubs")
+          $("#lista-klubow-czlonek").show();
+          $("#lista-klubow-wlasciciel").hide();
+          $("#personClubsDataLegend").text("Członek");
+          $("#czlonekButton").prop('disabled', true);
+          $("#wlascicielButton").prop('disabled', false);
+        });
+    });
+  }
+
+
+</script>
+
+
 <div>
 
+  <div class="form_row">
+    <input type="button" id="czlonekButton" value="Członek" onclick="setJoinedClubsForm()">
+    <input type="button" id="wlascicielButton" value="Właściciel" onclick="setOwnedClubsForm()">
+    <input type="button" value="Dołącz do nowego klubu" onclick="load_all_clubs_form()">
+    <input type="button" value="Stwórz nowy klub" onclick="load_club_form(loadType.CREATE)">
+  </div>
+
   <fieldset class="form_fieldset">
-    <legend>Twoje kluby</legend>
-    <div id="clubslist"></div>
+    <legend id="personClubsDataLegend">Członek</legend>
+    <div class="form_row" id="lista-klubow-czlonek"></div>
+    <div class="form_row" id="lista-klubow-wlasciciel"> </div>
+
   </fieldset>
 
-  <div id="allclubs">
-    <table id="clubs_table" class="display" width="100%">
-      <thead>
-      <tr>
-        <th>Nazwa</th>
-        <th>Opis</th>
-        <th>Email</th>
-        <th>Sport</th>
-        <th>Szkolenia</th>
-        <th>Rekreacja</th>
-      </tr>
-      </thead>
+<!--  <fieldset class="form_fieldset">-->
+<!--    <legend>Twoje kluby</legend>-->
+<!--    <div id="clubslist"></div>-->
 
-      <tbody>
-      </tbody>
+<!--    <div id="allclubs">-->
+<!--      <table id="clubs_table" class="display" width="100%">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th>Nazwa</th>-->
+<!--          <th>Opis</th>-->
+<!--          <th>Email</th>-->
+<!--          <th>Sport</th>-->
+<!--          <th>Szkolenia</th>-->
+<!--          <th>Rekreacja</th>-->
+<!--          <th>Członkowie</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-      <tfoot>
-      <th>Nazwa</th>
-      <th>Opis</th>
-      <th>Email</th>
-      <th>Sport</th>
-      <th>Szkolenia</th>
-      <th>Rekreacja</th>
-      </tfoot>
-    </table>
+<!--        <tbody>-->
+<!--        </tbody>-->
+
+<!--        <tfoot>-->
+<!--        <th>Nazwa</th>-->
+<!--        <th>Opis</th>-->
+<!--        <th>Email</th>-->
+<!--        <th>Sport</th>-->
+<!--        <th>Szkolenia</th>-->
+<!--        <th>Rekreacja</th>-->
+<!--        <th>Członkowie</th>-->
+<!--        </tfoot>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </fieldset>-->
+
+
+
+
+  <div id="clubCreation">
+<!--    <input type="button" value="Stwórz nowy klub" onclick="load_club_form(loadType.CREATE)">-->
   </div>
 
 </div>

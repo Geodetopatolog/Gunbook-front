@@ -47,13 +47,19 @@
         }
 
         function disableLoginData() {
-            $("#logiData").html("");
+            $("#loginData").html("");
         }
 
         function setCreatePerson() {
             enableAll();
             enableLoginData()
             $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitPersonForm(methods.POST)\">");
+        }
+
+        function setReadOnlyPerson() {
+            disableAll();
+            disableLoginData()
+            $("#form_submit_button").html("");
         }
 
         function setReadPerson() {
@@ -104,6 +110,7 @@
                 <label class="form_label" for="kluby">Kluby </label>
                 <div id="kluby"></div>
                 <div class="clear_both"></div>
+<!--                <input type="button" value="Utwórz nowy klub" onclick="load_club_form(loadType.CREATE)">-->
             </div>
 
         </fieldset>
