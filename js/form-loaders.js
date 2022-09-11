@@ -1,8 +1,12 @@
 function load_starter_page() {
     if (localStorage.getItem("authority") === "GUEST") {
         $("#main").load("form/starter-page.html");
+
     } else {
         load_logged_person_form();
+        $("#loginButton").hide();
+        $("#logoutButton").show();
+        $("#registerButton").hide();
     }
 
 }
@@ -37,6 +41,16 @@ function load_person_form(type) {
                 });
             }
         }
+            break;
+
+        case "readrequested":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/person-form.html", function () {
+                    setReadClubApplierPerson();
+                });
+            }
+        }
     }
 }
 
@@ -55,7 +69,7 @@ function load_logged_person_form() {
 function load_all_persons_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
         $("#main").load("form/all-persons-list.html");
-        fillAllPersonsTable(getAllPersons());
+        fillAllPersonsTable(getAllPersons(), '#persons_table', loadType.READ);
     }
 }
 
@@ -68,6 +82,17 @@ function load_club_form(type) {
                 $("#main").load("form/club-form.html", function () {
                     initializeClubForm();
                     setCreateClub();
+                });
+            }
+        }
+            break;
+
+        case "readrequested":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/club-form.html", function () {
+                    initializeClubForm();
+                    setReadAplierClub();
                 });
             }
         }
@@ -104,9 +129,13 @@ function load_club_form(type) {
                 });
             }
         }
-
-
     }
+}
+
+function load_current_club_form(id) {
+    load_club_form(loadType.READ_OWNER);
+    fillClubForm(getClubById(id));
+    localStorage.removeItem("currentClubId");
 }
 
 function load_logged_person_clubs_form() {
@@ -114,9 +143,11 @@ function load_logged_person_clubs_form() {
         && localStorage.getItem("loggedUserId") !== "-1") {
 
         $("#main").load("form/person-clubs-list.html", function () {
-            initializePersonClubsForm();
-            fillAllClubsTable(getClubsByPersonId(localStorage.getItem("loggedUserId")), '#joined_clubs');
-            fillAllClubsTable(getClubsOwnedByPersonId(localStorage.getItem("loggedUserId")), '#owned_clubs');
+            initializePersonClubsForm().finally(() => {
+                fillAllClubsTable(getClubsByPersonId(localStorage.getItem("loggedUserId")), '#joined_clubs');
+                fillAllClubsTable(getRequestedClubsByPersonId(localStorage.getItem("loggedUserId")), '#applied_clubs');
+                fillAllClubsTable(getClubsOwnedByPersonId(localStorage.getItem("loggedUserId")), '#owned_clubs');
+            });
         });
     }
 }
@@ -177,15 +208,22 @@ function load_logged_person_events_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)
         && localStorage.getItem("loggedUserId") !== null) {
 
-        $("#main").load("form/person-events-form.html");
-        fillAllEventTable(getEventsJoinedByPersonId(localStorage.getItem("loggedUserId")));
+        $("#main").load("form/person-events-form.html", function () {
+            initializePersonEventsForm();
+            fillAllEventTable(getEventsJoinedByPersonId(localStorage.getItem("loggedUserId")), '#joined_events');
+            fillAllEventTable(getEventsAppliedByPersonId(localStorage.getItem("loggedUserId")), '#applied_events');
+
+        });
+
     }
 }
+
+
 
 function load_all_events_form() {
     if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
         $("#main").load("form/all-events-list.html");
-        fillAllEventTable(getAllEvents());
+        fillAllEventTable(getAllEvents(), '#events_table');
     }
 }
 
@@ -225,4 +263,5 @@ function load_login_form() {
     {
         $("#main").load("form/login-form.html");
     }
+
 }

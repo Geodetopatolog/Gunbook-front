@@ -1,35 +1,55 @@
 <script>
 
-  function setOwnedClubsForm() {
-      $("#lista-klubow-czlonek").hide();
-      $("#lista-klubow-wlasciciel").show();
-      $("#personClubsDataLegend").text("Właściciel");
-      $("#czlonekButton").prop('disabled', false);
-      $("#wlascicielButton").prop('disabled', true);
-  }
-
   function setJoinedClubsForm() {
       $("#lista-klubow-czlonek").show();
+      $("#lista-klubow-aplikant").hide();
       $("#lista-klubow-wlasciciel").hide();
       $("#personClubsDataLegend").text("Członek");
       $("#czlonekButton").prop('disabled', true);
+      $("#aplikantButton").prop('disabled', false);
       $("#wlascicielButton").prop('disabled', false);
+  }
+
+  function setAppliedClubsForm() {
+    $("#lista-klubow-czlonek").hide();
+    $("#lista-klubow-aplikant").show();
+    $("#lista-klubow-wlasciciel").hide();
+    $("#personClubsDataLegend").text("Aplikant");
+    $("#czlonekButton").prop('disabled', false);
+    $("#aplikantButton").prop('disabled', true);
+    $("#wlascicielButton").prop('disabled', false);
+  }
+
+  function setOwnedClubsForm() {
+    $("#lista-klubow-czlonek").hide();
+    $("#lista-klubow-aplikant").hide();
+    $("#lista-klubow-wlasciciel").show();
+    $("#personClubsDataLegend").text("Właściciel");
+    $("#czlonekButton").prop('disabled', false);
+    $("#aplikantButton").prop('disabled', false);
+    $("#wlascicielButton").prop('disabled', true);
   }
 
   function setReadClubsForm() {
     $('#clubCreation').html("");
   }
 
-  function initializePersonClubsForm() {
+  async function initializePersonClubsForm() {
     $("#lista-klubow-wlasciciel").load("form/all-clubs-list.html", function() {
       $("#clubs_table").attr("id","owned_clubs")
         $("#lista-klubow-czlonek").load("form/all-clubs-list.html", function() {
           $("#clubs_table").attr("id","joined_clubs")
-          $("#lista-klubow-czlonek").show();
-          $("#lista-klubow-wlasciciel").hide();
-          $("#personClubsDataLegend").text("Członek");
-          $("#czlonekButton").prop('disabled', true);
-          $("#wlascicielButton").prop('disabled', false);
+            $("#lista-klubow-aplikant").load("form/all-clubs-list.html", function() {
+              $("#clubs_table").attr("id", "applied_clubs")
+
+              $("#lista-klubow-czlonek").show();
+              $("#lista-klubow-aplikant").hide();
+              $("#lista-klubow-wlasciciel").hide();
+              $("#personClubsDataLegend").text("Członek");
+              $("#czlonekButton").prop('disabled', true);
+              $("#aplikantButton").prop('disabled', false);
+              $("#wlascicielButton").prop('disabled', false);
+            });
         });
     });
   }
@@ -41,15 +61,17 @@
 <div>
 
   <div class="form_row">
-    <input type="button" id="czlonekButton" value="Członek" onclick="setJoinedClubsForm()">
-    <input type="button" id="wlascicielButton" value="Właściciel" onclick="setOwnedClubsForm()">
-    <input type="button" value="Dołącz do nowego klubu" onclick="load_all_clubs_form()">
-    <input type="button" value="Stwórz nowy klub" onclick="load_club_form(loadType.CREATE)">
+    <input type="button" class="button" id="czlonekButton" value="Członek" onclick="setJoinedClubsForm()">
+    <input type="button" class="button" id="aplikantButton" value="Aplikant" onclick="setAppliedClubsForm()">
+    <input type="button" class="button" id="wlascicielButton" value="Właściciel" onclick="setOwnedClubsForm()">
+    <input type="button" class="button" value="Dołącz do nowego klubu" onclick="load_all_clubs_form()">
+    <input type="button" class="button" value="Stwórz nowy klub" onclick="load_club_form(loadType.CREATE)">
   </div>
 
   <fieldset class="form_fieldset">
     <legend id="personClubsDataLegend">Członek</legend>
     <div class="form_row" id="lista-klubow-czlonek"></div>
+    <div class="form_row" id="lista-klubow-aplikant"></div>
     <div class="form_row" id="lista-klubow-wlasciciel"> </div>
 
   </fieldset>

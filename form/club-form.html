@@ -27,8 +27,26 @@
             $("#relatedDataPanel").hide();
             $("#create_event_button").hide();
             $("#relatedDataLists").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#leave_club_button").hide();
+            $("#update_club_button").hide();
+            $("#panelEdycji").hide();
+            $("#form_submit_button").show();
+        }
 
-            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitClubForm(methods.POST)\">");
+        function setReadAplierClub() {
+            disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").hide();
+            $("#relatedDataPanel").hide();
+            $("#create_event_button").hide();
+            $("#form_submit_button").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").show();
+            $("#leave_club_button").hide();
+            $("#update_club_button").hide();
+            $("#panelEdycji").hide();
         }
 
         //widzi inych członków, nie może edytować
@@ -37,9 +55,13 @@
             $("#czlonkowie-ilosc").show();
             $("#czlonkowie-lista").show();
             $("#relatedDataPanel").show();
-            // $("#relatedDataLists").show();
             $("#create_event_button").hide();
-            $("#form_submit_button").html("");
+            $("#form_submit_button").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#leave_club_button").show();
+            $("#update_club_button").hide();
+            $("#panelEdycji").hide();
         }
 
         //widzi innych członków i może edytować
@@ -50,7 +72,12 @@
             $("#relatedDataPanel").show();
             // $("#relatedDataLists").show();
             $("#create_event_button").show();
-            $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdateClub()\">");
+            $("#form_submit_button").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#leave_club_button").hide();
+            $("#update_club_button").show();
+            $("#panelEdycji").hide();
         }
 
         //widzi tylko liczbę członków, nie może edytować
@@ -61,7 +88,12 @@
             $("#relatedDataPanel").hide();
             $("#relatedDataLists").hide();
             $("#create_event_button").hide();
-            $("#form_submit_button").html("");
+            $("#form_submit_button").hide();
+            $("#club_application_button").show();
+            $("#remove_club_application_button").hide();
+            $("#leave_club_button").hide();
+            $("#update_club_button").hide();
+            $("#panelEdycji").hide();
         }
 
         function setUpdateClub() {
@@ -71,9 +103,11 @@
             $("#relatedDataPanel").hide();
             $("#relatedDataLists").hide();
             $("#create_event_button").hide();
-            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitClubForm(methods.PATCH)\">\n" +
-                "        <input type=\"button\" value=\"Usuń\" onclick=\"submitClubForm(methods.DELETE)\">\n" +
-                "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadClub()\">");
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#leave_club_button").hide();
+            $("#update_club_button").hide();
+            $("#panelEdycji").show();
         }
         function prepareForCreatingEvent() {
             localStorage.setItem("eventOrganizerClubId", $("#id_club").val());
@@ -83,51 +117,77 @@
         function showAllMembers() {
             $("#relatedDataLists").show();
             $("#czlonkowie-lista").show();
+            $("#aplikanci-lista").hide();
             $("#eventy-lista").hide();
             $("#strzelnice-lista").hide();
             $("#relatedDataLegend").text("Członkowie");
-            $("#czlonkowieButton").prop('disabled', true);
-            $("#eventyButton").prop('disabled', false);
-            $("#strzelniceButton").prop('disabled', false);
+            $("#czlonkowie-button").prop('disabled', true);
+            $("#aplikanci-button").prop('disabled', false);
+            $("#eventy-button").prop('disabled', false);
+            $("#strzelnice-button").prop('disabled', false);
+        }
+
+        function showAllRequests() {
+            $("#relatedDataLists").show();
+            $("#czlonkowie-lista").hide();
+            $("#aplikanci-lista").show();
+            $("#eventy-lista").hide();
+            $("#strzelnice-lista").hide();
+            $("#relatedDataLegend").text("Aplikanci");
+            $("#czlonkowie-button").prop('disabled', false);
+            $("#aplikanci-button").prop('disabled', true);
+            $("#eventy-button").prop('disabled', false);
+            $("#strzelnice-button").prop('disabled', false);
         }
 
         function showAllEvents() {
             $("#relatedDataLists").show();
             $("#czlonkowie-lista").hide();
+            $("#aplikanci-lista").hide();
             $("#eventy-lista").show();
             $("#strzelnice-lista").hide();
             $("#relatedDataLegend").text("Eventy");
-            $("#czlonkowieButton").prop('disabled', false);
-            $("#eventyButton").prop('disabled', true);
-            $("#strzelniceButton").prop('disabled', false);
+            $("#czlonkowie-button").prop('disabled', false);
+            $("#aplikanci-button").prop('disabled', false);
+            $("#eventy-button").prop('disabled', true);
+            $("#strzelnice-button").prop('disabled', false);
         }
 
         function showAllShootingranges() {
             $("#relatedDataLists").show();
             $("#czlonkowie-lista").hide();
+            $("#aplikanci-lista").hide();
             $("#eventy-lista").hide();
             $("#strzelnice-lista").show();
             $("#relatedDataLegend").text("Strzelnice");
-            $("#czlonkowieButton").prop('disabled', false);
-            $("#eventyButton").prop('disabled', false);
-            $("#strzelniceButton").prop('disabled', true);
+            $("#czlonkowie-button").prop('disabled', false);
+            $("#aplikanci-button").prop('disabled', false);
+            $("#eventy-button").prop('disabled', false);
+            $("#strzelnice-button").prop('disabled', true);
         }
 
 
         function initializeClubForm() {
              $("#relatedDataLists").hide();
             $("#czlonkowie-lista").load("form/all-persons-list.html", function() {
-                // setReadClubsForm();
                 $("#czlonkowie-lista").hide();
-                $("#czlonkowieButton").prop('disabled', false);
+                $("#czlonkowie-button").prop('disabled', false);
+                $("#persons_table").attr("id","members_table")
+
+                    $("#aplikanci-lista").load("form/all-persons-list.html", function() {
+                        $("#aplikanci-lista").hide();
+                        $("#aplikanci-button").prop('disabled', false);
+                        $("#persons_table").attr("id","requests_table")
+                    });
             });
+
             $("#eventy-lista").load("form/all-events-list.html", function() {
                 $("#eventy-lista").hide();
-                $("#eventyButton").prop('disabled', false);
+                $("#eventy-button").prop('disabled', false);
             });
             $("#strzelnice-lista").load("form/all-ranges-list.html", function() {
                 $("#strzelnice-lista").hide();
-                $("#strzelniceButton").prop('disabled', false);
+                $("#strzelnice-button").prop('disabled', false);
             });
 
         }
@@ -176,32 +236,37 @@
             </div>
         </fieldset>
 
-
-
         <div class="form_row" id="relatedDataPanel">
-            <input type="button" id="czlonkowieButton" value="Członkowie" onclick="showAllMembers()">
-            <input type="button" id="eventyButton" value="Eventy" onclick="showAllEvents()">
-            <input type="button" id="strzelniceButton" value="Strzelnice" onclick="showAllShootingranges()">
+            <input type="button" id="czlonkowie-button" value="Członkowie" onclick="showAllMembers()">
+            <input type="button" id="aplikanci-button" value="Aplikanci" onclick="showAllRequests()">
+            <input type="button" id="eventy-button" value="Eventy" onclick="showAllEvents()">
+            <input type="button" id="strzelnice-button" value="Strzelnice" onclick="showAllShootingranges()">
         </div>
 
                 <fieldset class="form_fieldset" id="relatedDataLists">
                     <legend id="relatedDataLegend">Członkowie</legend>
                     <div class="form_row" id="czlonkowie-lista"></div>
+                    <div class="form_row" id="aplikanci-lista"></div>
                     <div class="form_row" id="eventy-lista"> </div>
                     <div class="form_row" id="strzelnice-lista"></div>
                 </fieldset>
 
+    </div>
 
-
-
+    <div class="form_row" id="panelEdycji">
+        <input type="button" value="Zapisz zmiany" onclick="submitClubForm(methods.PATCH)">
+        <input type="button" value="Usuń" onclick="submitClubForm(methods.DELETE)">
+        <input type="button" value="Anuluj" onclick="setReadOnlyClub()">
 
     </div>
 
-    <div class="form_submit_button" id="form_submit_button">
-    </div>
-
-    <div class="form_submit_button" id="create_event_button">
-        <input type="button" value="Utwórz nowy event" onclick="prepareForCreatingEvent()">
+    <div class="form_submit_button">
+        <input type="button" id="update_club_button"  value="Edytuj" onclick="setUpdateClub()">
+        <input type="button" id="form_submit_button" value="Stwórz klub" onclick="prepareForCreatingEvent()">
+        <input type="button" id="create_event_button" value="Utwórz nowy event" onclick="prepareForCreatingEvent()">
+        <input type="button" id="club_application_button" value="Zostań naszym członkiem!" onclick="submitClubMembershipRequestByPersonForm()">
+        <input type="button" id="leave_club_button" value="Opuść klub" onclick="submitClubLeaveByMemberForm()">
+        <input type="button" id="remove_club_application_button" value="Cofnij prośbę o przyjęcie" onclick="submitDeleteClubMembershipRequestByPersonForm()">
     </div>
 
 

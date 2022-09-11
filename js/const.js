@@ -23,14 +23,23 @@ const URL_PREFIX = 'http://localhost:8080/';
 const url = {
     PERSON: URL_PREFIX + "person",
     PERSONS: URL_PREFIX + "person/all/basic",
+
     PERSON_JOINED_EVENTS: URL_PREFIX + "person/joined_events",
+    PERSON_JOINED_EVENTS_IDS: URL_PREFIX + "person/joined_events/ids",
     PERSON_JOINED_EVENTS_REQUESTS: URL_PREFIX + "person/joined_events/requests",
+    PERSON_JOINED_EVENTS_REQUESTS_IDS: URL_PREFIX + "person/joined_events/requests/ids",
+
     PERSON_JOINED_CLUBS: URL_PREFIX + "person/clubs",
+    PERSON_JOINED_CLUBS_IDS: URL_PREFIX + "person/clubs/ids",
     PERSON_OWNED_CLUBS: URL_PREFIX + "person/owned_clubs",
+    PERSON_OWNED_CLUBS_IDS: URL_PREFIX + "person/owned_clubs/ids",
+    PERSON_REQUESTED_CLUBS: URL_PREFIX + "person/clubs/request/",
+    PERSON_REQUESTED_CLUBS_IDS: URL_PREFIX + "person/clubs/request/ids",
 
     CLUB: URL_PREFIX + "club",
     CLUBS: URL_PREFIX + "club/all",
     CLUB_MEMBERS: URL_PREFIX + "club/members",
+    CLUB_MEMBERSHIP_REQUESTS: URL_PREFIX + "club/members/requests",
     CLUB_EVENTS: URL_PREFIX + "club/events_organized",
     CLUB_RANGES: URL_PREFIX + "club/ranges",
 

@@ -25,7 +25,7 @@ function setSameValueOnEventDate() {
     document.getElementById("dzienk").value = document.getElementById("dziens").value;
 }
 
-async function httpRequestPostPatch(url, body, method) {
+async function httpRequestPostPatch(url, body, method, refreshFunction) {
     console.log(method);
     let params = {
         headers:{
@@ -39,8 +39,10 @@ async function httpRequestPostPatch(url, body, method) {
     fetch(url, params)
         .then(response => response.statusText)
         .then(data => {
-            console.log('sukces:', data)
-        });
+            console.log('sukces:', data);})
+        .finally(() => {
+        refreshFunction(localStorage.getItem("loggedUserId"));
+    });
 }
 
 async function httpRequestPostPersonRegistrationForm(url, body) {
@@ -74,7 +76,7 @@ async function httpRequestGet(Url) {
     return await res.json();
 }
 
-async function httpRequestDelete(url, fillFunction) {
+async function httpRequestDelete(url, fillFunction, refreshFunction) {
     let params = {
         headers:{
             'Content-Type': "application/json",
@@ -85,9 +87,11 @@ async function httpRequestDelete(url, fillFunction) {
 
     fetch(url, params)
      //   .then(response => response.statusText)
-        .then(a => {
-            fillFunction();
-        });
+        .then(() => {
+            fillFunction();})
+        .finally(() => {
+        refreshFunction(localStorage.getItem("loggedUserId"));
+    });
 
 }
 
@@ -108,29 +112,40 @@ async function login(username, password) {
     }
 
     let res = await fetch(Url, Params);
-    let log = await res.json();
+    let status = res.status;
 
-    localStorage.setItem("JWT", log.jwt);
-    localStorage.setItem("authority", log.role);
-    localStorage.setItem("loggedUserId", JSON.stringify(log.loggedUserId));
-    localStorage.setItem("loggedUserClubsIds", JSON.stringify(log.loggedUserClubsIds));
-    localStorage.setItem("loggedUserOwnedClubsIds", JSON.stringify(log.loggedUserOwnedClubsIds));
-    localStorage.setItem("loggedUserJoinedEventsIds", JSON.stringify(log.loggedUserJoinedEventsIds));
-    localStorage.setItem("loggedUserAppliedClubsIds", JSON.stringify(log.loggedUserAppliedClubsIds));
-    localStorage.setItem("loggedUserAppliedEventsIds", JSON.stringify(log.loggedUserAppliedEventsIds));
+    if (status === 200) {
+        let log = await res.json();
+
+        localStorage.setItem("JWT", log.jwt);
+        localStorage.setItem("authority", log.role);
+        localStorage.setItem("loggedUserId", JSON.stringify(log.loggedUserId));
+        localStorage.setItem("loggedUserClubsIds", JSON.stringify(log.loggedUserClubsIds));
+        localStorage.setItem("loggedUserOwnedClubsIds", JSON.stringify(log.loggedUserOwnedClubsIds));
+        localStorage.setItem("loggedUserJoinedEventsIds", JSON.stringify(log.loggedUserJoinedEventsIds));
+        localStorage.setItem("loggedUserAppliedClubsIds", JSON.stringify(log.loggedUserAppliedClubsIds));
+        localStorage.setItem("loggedUserAppliedEventsIds", JSON.stringify(log.loggedUserAppliedEventsIds));
 
 
-    console.log(parseJwt(log.jwt).id);
-    console.log("localStorage JWT " + localStorage.getItem("JWT"));
-    console.log("localStorage authority " + localStorage.getItem("authority"));
-    console.log("localStorage loggedUserId " + localStorage.getItem("loggedUserId"));
-    console.log("localStorage loggedUserClubsIds " + JSON.parse(localStorage.getItem("loggedUserClubsIds")));
-    console.log("localStorage loggedUserOwnedClubsIds " + JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds")));
-    console.log("localStorage loggedUserJoinedEventsIds " + JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds")));
-    console.log("localStorage loggedUserAppliedClubsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds")));
-    console.log("localStorage loggedUserAppliedEventsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds")));
+        console.log(parseJwt(log.jwt).id);
+        console.log("localStorage JWT " + localStorage.getItem("JWT"));
+        console.log("localStorage authority " + localStorage.getItem("authority"));
+        console.log("localStorage loggedUserId " + localStorage.getItem("loggedUserId"));
+        console.log("localStorage loggedUserClubsIds " + JSON.parse(localStorage.getItem("loggedUserClubsIds")));
+        console.log("localStorage loggedUserOwnedClubsIds " + JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds")));
+        console.log("localStorage loggedUserJoinedEventsIds " + JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds")));
+        console.log("localStorage loggedUserAppliedClubsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds")));
+        console.log("localStorage loggedUserAppliedEventsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds")));
 
-    load_logged_person_form();
+        load_logged_person_form();
+        $("#loginButton").hide();
+        $("#logoutButton").show();
+        $("#registerButton").hide();
+
+    } else if(status === 403) {
+        alert("Błędny login lub hasło");
+    }
+
 }
 
 function logout() {
@@ -138,12 +153,12 @@ function logout() {
     localStorage.clear();
     localStorage.setItem("authority", "GUEST");
     load_starter_page();
+    $("#loginButton").show();
+    $("#logoutButton").hide();
+    $("#registerButton").show();
 }
 
-function submitLoginForm() {
 
-    login(document.getElementById("login").value, document.getElementById("pass1").value);
-}
 
 function parseJwt (token) {
     let base64Url = token.split('.')[1];
@@ -154,4 +169,7 @@ function parseJwt (token) {
 
     return JSON.parse(jsonPayload);
 }
+
+
+
 

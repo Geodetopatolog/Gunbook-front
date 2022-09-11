@@ -59,34 +59,22 @@
     <ul>
         <li><input type="button" class="button" value="Mój profil" onclick="load_logged_person_form()"></li>
         <li><input type="button" class="button" value="Moje kluby" onclick="load_logged_person_clubs_form()"></li>
-<!--        todo jakoś to ładnie nazwać-->
         <li><input type="button" class="button" value="Moje eventy" onclick="load_logged_person_events_form()"></li>
 
         <li><a href="#">Mój profil</a></li>
         <li><a href="#">Mój klub</a></li>
         <li><a href="#">Moje wydarzenia</a></li>
         <li><a href="#">Znajomi</a></li>
-<!--    <li><input type="button" value="Radio button" onclick="displayRadioValue()"></li>-->
-<!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
-<!--    <li><input type="button" value="Checkbox" onclick="randomAnimation()"></li>-->
-<!--    <li><input type="button" value="Option" onclick="randomAnimation()"></li>-->
-<!--        <li><input type="button" value="Formularz osobowy" onclick="load_person_form(loadType.CREATE)"></li>-->
-<!--        <li><input type="button" value="Podgląd osoby" onclick="load_person_form(loadType.READ)"></li>-->
-
-
-<!--        <li><input type="button" value="Formularz klubu" onclick="load_club_form(loadType.CREATE)"></li>-->
-<!--        <li><input type="button" value="Podgląd klubu" onclick="load_club_form(loadType.READ)"></li>-->
-
 
         <li><input type="button" class="button" value="Formularz eventu" onclick="load_event_form(loadType.CREATE)"></li>
-<!--        <li><input type="button" value="Podgląd eventu" onclick="load_event_form(loadType.READ)"></li>-->
-
 
         <li><input type="button" class="button" value="Formularz strzelnicy" onclick="load_range_form(loadType.CREATE)"></li>
-<!--        <li><input type="button" value="Podgląd strzelnicy" onclick="load_range_form(loadType.READ)"></li>-->
 
-<!--        <li><input type="button" value="Zaloguj" onclick="load_login_form()"></li>-->
-        <li><input type="button" class="button" value="Wyloguj" onclick="logout()"></li>
+        <li><input type="button" class="button" id="loginButton" value="Zaloguj" onclick="load_login_form()"></li>
+        <li><input type="button" class="button" id="logoutButton" value="Wyloguj" onclick="logout()" hidden></li>
+        <li><input type="button" class="button" id="registerButton" value="Zarejestruj się" onclick="load_person_form(loadType.CREATE)"></li>
+        <li><input type="button" class="button" value="Próba" onclick="refreshEventsRequests(3)"></li>
+
 
 
 

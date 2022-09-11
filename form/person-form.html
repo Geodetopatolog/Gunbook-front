@@ -67,6 +67,12 @@
             disableLoginData()
             $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdatePerson()\">");
         }
+        function setReadClubApplierPerson() {
+            disableAll();
+            disableLoginData()
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Zaakceptuj kandydata\" onclick=\"submitAcceptMembershipRequestByPersonForm()\">");
+        }
+
         //todo dorobić zmianę hasła
         function setUpdatePerson() {
             enableAll();

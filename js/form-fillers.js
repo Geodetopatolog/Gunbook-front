@@ -15,11 +15,11 @@ async function fillPersonForm(Data) {
     });
 }
 
-async function fillAllPersonsTable(Data) {
+async function fillAllPersonsTable(Data, tableId, loadType) {
     Data.then((persons) => {
         console.log(persons);
         $(document).ready(function () {
-            let table = $('#persons_table').DataTable({
+            let table = $(tableId).DataTable({
                 scrollX:        true,
                 scrollCollapse: true,
                 fixedColumns: {
@@ -34,15 +34,14 @@ async function fillAllPersonsTable(Data) {
                     { "data": "email" },
                 ],
             });
-            $('#persons_table tbody').on('click', 'tr', function () {
-                let loggedPersonId = localStorage.getItem("loggedUserId");
-                if (loggedPersonId === table.row(this).data().id_person) {
-                    console.log(true);
-                    load_person_form(loadType.READ);
-                } else {
-                    console.log(false);
-                    load_person_form(loadType.READ_ONLY);
-                }
+            $(tableId + ' tbody').on('click', 'tr', function () {
+                // let loggedPersonId = localStorage.getItem("loggedUserId");
+                // if (loggedPersonId === table.row(this).data().id_person) {
+                //     load_person_form(loadType.READ);
+                // } else {
+                //     load_person_form(loadType.READ_ONLY);
+                // }
+                load_person_form(loadType);
                 fillPersonForm(getPersonById(table.row(this).data().id_person));
             });
         });
@@ -67,8 +66,9 @@ async function fillClubForm(Data) {
         $("#rekreacja").prop("checked",true);
 
             $("#czlonkowie").val(club.members_count);
-        fillAllPersonsTable(getAllClubMembersByClubId(club.id_club));
-            fillAllEventTable(getAllEventsByClubId(club.id_club));
+            fillAllPersonsTable(getAllClubMembersByClubId(club.id_club), '#members_table', loadType.READ); //todo zronić na read member
+            fillAllPersonsTable(getAllClubRequestsByClubId(club.id_club), '#requests_table', loadType.READ_REQUESTED);
+            fillAllEventTable(getAllEventsByClubId(club.id_club), '#events_table');
             fillAllRangesTable(getAllRangesByClubId(club.id_club));
     });
 
@@ -103,18 +103,23 @@ async function fillAllClubsTable(Data, tableId) {
                 ],
             });
             $(tableId + ' tbody').on('click', 'tr', function () {
+                let loggedUserAppliedClubsIds = JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds"));
                 let loggedUserClubsIds = JSON.parse(localStorage.getItem("loggedUserClubsIds"));
                 let loggedUserOwnedClubsIds = JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds"));
+                let id_club = table.row(this).data().id_club;
+                localStorage.setItem("currentClubId", JSON.stringify(id_club));
 
-                if (loggedUserOwnedClubsIds.includes(table.row(this).data().id_club)) {
+                if (loggedUserOwnedClubsIds.includes(id_club)) {
                     load_club_form(loadType.READ_OWNER);
-                } else if (loggedUserClubsIds.includes(table.row(this).data().id_club)) {
+                } else if (loggedUserClubsIds.includes(id_club)) {
                     load_club_form(loadType.READ_MEMBER);
+                } else if (loggedUserAppliedClubsIds.includes(id_club)) {
+                    load_club_form(loadType.READ_REQUESTED);
                 } else {
                     load_club_form(loadType.READ_ONLY);
                 }
 
-                fillClubForm(getClubById(table.row(this).data().id_club));
+                fillClubForm(getClubById(id_club));
             });
         });
     });
@@ -150,10 +155,11 @@ async function fillEventForm(Data) {
     });
 }
 
-async function fillAllEventTable(Data) {
+async function fillAllEventTable(Data, tableId) {
+    console.log(tableId);
     Data.then((events) => {
         $(document).ready(function () {
-            let table = $('#events_table').DataTable({
+            let table = $(tableId).DataTable({
                 scrollX:        true,
                 scrollCollapse: true,
                 fixedColumns: {
@@ -177,7 +183,7 @@ async function fillAllEventTable(Data) {
                     { "data": "membersOnly" },
                 ],
             });
-            $('#events_table tbody').on('click', 'tr', function () {
+            $(tableId + ' tbody').on('click', 'tr', function () {
                 load_event_form(loadType.READ);
 
                 let loggedUserJoinedEventsIds = JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds"));
