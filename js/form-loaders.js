@@ -1,14 +1,27 @@
 function load_starter_page() {
-    if (localStorage.getItem("authority") === "GUEST") {
-        $("#main").load("form/starter-page.html");
 
+    $("#main").load("form/starter-page.html");
+    if (localStorage.getItem("authority") === "GUEST") {
+        $("#currentState").text("Gość");
+        setCurrentState(states.GUEST);
     } else {
-        load_logged_person_form();
+        if (localStorage.getItem("authority") === "USER") {
+            $("#currentState").text("Użytkownik");
+            setCurrentState(states.USER);
+        } else if (localStorage.getItem("authority") === "ADMIN") {
+            $("#currentState").text("Administrator");
+            setCurrentState(states.ADMIN);
+        } else if (localStorage.getItem("authority") === "GOD") {
+            $("#currentState").text("BÓG!1!!");
+            setCurrentState(states.GOD);
+        }
+
+        // load_logged_person_form();
         $("#loginButton").hide();
         $("#logoutButton").show();
         $("#registerButton").hide();
-    }
 
+    }
 }
 
 function load_person_form(type) {
@@ -51,6 +64,20 @@ function load_person_form(type) {
                 });
             }
         }
+            break;
+
+        case "readmember":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/person-form.html", function () {
+                    setReadClubMemberPerson();
+                });
+            }
+        }
+
+
+
+
     }
 }
 
@@ -63,6 +90,7 @@ function load_logged_person_form() {
         });
 
         fillPersonForm(getPersonById(localStorage.getItem("loggedUserId")));
+        setCurrentState(states.USER);
     }
 }
 
@@ -80,7 +108,7 @@ function load_club_form(type) {
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/club-form.html", function () {
-                    initializeClubForm();
+                    // initializeClubForm();
                     setCreateClub();
                 });
             }
@@ -91,7 +119,7 @@ function load_club_form(type) {
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/club-form.html", function () {
-                    initializeClubForm();
+                    // initializeClubForm();
                     setReadAplierClub();
                 });
             }
@@ -102,7 +130,7 @@ function load_club_form(type) {
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/club-form.html", function () {
-                    initializeClubForm();
+                    // initializeClubForm();
                     setReadMemberClub();
                 });
             }
@@ -113,8 +141,12 @@ function load_club_form(type) {
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/club-form.html", function () {
-                    initializeClubForm();
+                    // initializeClubForm();
                     setReadOwnerClub();
+                    if (localStorage.getItem("currentState") === "CLUB") {
+                        setControlClubBack();
+                    }
+
                 });
             }
         }
@@ -124,7 +156,7 @@ function load_club_form(type) {
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/club-form.html", function () {
-                    initializeClubForm();
+                    // initializeClubForm();
                     setReadOnlyClub();
                 });
             }
@@ -132,10 +164,11 @@ function load_club_form(type) {
     }
 }
 
-function load_current_club_form(id) {
+function load_current_club_form() {
     load_club_form(loadType.READ_OWNER);
-    fillClubForm(getClubById(id));
-    localStorage.removeItem("currentClubId");
+    let id_club = localStorage.getItem("currentClubId")
+    fillClubForm(getClubById(id_club));
+    //localStorage.removeItem("currentClubId");
 }
 
 function load_logged_person_clubs_form() {
@@ -160,14 +193,45 @@ function load_all_clubs_form() {
     }
 }
 
-async function load_event_form(type) {
-
+function load_event_form(type) {
     switch (type) {
+
         case "create":
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/event-form.html", function () {
                     setCreateEvent();
+                });
+            }
+        }
+        break;
+
+        case "readonly":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                console.log("jestem w readonly");
+                $("#main").load("form/event-form.html", function () {
+                    setReadOnlyEvent();
+                });
+            }
+        }
+        break;
+
+        case "read":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/event-form.html", function () {
+                    setReadEvent();
+                });
+            }
+        }
+        break;
+
+        case "readrequested":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/event-form.html", function () {
+                    setReadRequestedEvent();
                 });
             }
         }
@@ -183,25 +247,16 @@ async function load_event_form(type) {
         }
         break;
 
-        case "readrequested":
+        case "readowner":
         {
             if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
                 $("#main").load("form/event-form.html", function () {
-                    setReadRequestedEvent();
-                });
-            }
-        }
-            break;
-
-        case "readonly":
-        {
-            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
-                $("#main").load("form/event-form.html", function () {
-                    setReadOnlyEvent();
+                    setReadOwnerEvent();
                 });
             }
         }
     }
+
 }
 
 function load_logged_person_events_form() {
@@ -238,7 +293,7 @@ function load_range_form(type) {
                 });
             }
         }
-            break;
+        break;
 
         case "read":
         {
@@ -248,6 +303,17 @@ function load_range_form(type) {
                 });
             }
         }
+        break;
+
+        case "readowner":
+        {
+            if (hasPermission(localStorage.getItem("authority"), actions.VIEW_PERSON)) {
+                $("#main").load("form/range-form.html", function () {
+                    setReadOwnerRange();
+                });
+            }
+        }
+
     }
 }
 

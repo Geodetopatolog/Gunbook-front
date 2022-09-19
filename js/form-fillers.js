@@ -1,4 +1,4 @@
-async function fillPersonForm(Data) {
+function fillPersonForm(Data) {
     Data.then((person) => {
         $("#id_person").val(person.id_person);
         $("#imie").val(person.name);
@@ -15,7 +15,7 @@ async function fillPersonForm(Data) {
     });
 }
 
-async function fillAllPersonsTable(Data, tableId, loadType) {
+function fillAllPersonsTable(Data, tableId, lT) {
     Data.then((persons) => {
         console.log(persons);
         $(document).ready(function () {
@@ -41,14 +41,22 @@ async function fillAllPersonsTable(Data, tableId, loadType) {
                 // } else {
                 //     load_person_form(loadType.READ_ONLY);
                 // }
-                load_person_form(loadType);
+                // let currentState = localStorage.getItem("currentState");
+                // if(currentState === states.USER)
+                // {
+                //     load_person_form(lT);
+                // } else {
+                //     load_person_form(loadType.CLUB_MEMBERS)
+                // }
+
+                load_person_form(lT);
                 fillPersonForm(getPersonById(table.row(this).data().id_person));
             });
         });
     });
 }
 
-async function fillClubForm(Data) {
+function fillClubForm(Data) {
 
     Data.then((club) => {
         $("#nazwa").val(club.name);
@@ -66,12 +74,27 @@ async function fillClubForm(Data) {
         $("#rekreacja").prop("checked",true);
 
             $("#czlonkowie").val(club.members_count);
-            fillAllPersonsTable(getAllClubMembersByClubId(club.id_club), '#members_table', loadType.READ); //todo zronić na read member
-            fillAllPersonsTable(getAllClubRequestsByClubId(club.id_club), '#requests_table', loadType.READ_REQUESTED);
-            fillAllEventTable(getAllEventsByClubId(club.id_club), '#events_table');
-            fillAllRangesTable(getAllRangesByClubId(club.id_club));
+
+            fillClubRelatedDataTables(club.id_club);
+
     });
 
+}
+
+function fillClubRelatedDataTables (id_club) {
+    let currentState = localStorage.getItem("currentState");
+     initializeClubForm();
+    if (currentState === "USER") {
+        fillAllPersonsTable(getAllClubMembersByClubId(id_club + ""), '#members_table', loadType.READ);
+        // fillAllPersonsTable(getAllClubRequestsByClubId(club.id_club), '#requests_table', loadType.READ_REQUESTED);
+        fillAllEventTable(getAllEventsByClubId(id_club + ""), '#events_table');
+        fillAllRangesTable(getAllRangesByClubId(id_club + ""));
+    } else if (currentState === "CLUB") {
+        fillAllPersonsTable(getAllClubMembersByClubId(id_club + ""), '#members_table', loadType.READ_MEMBER);
+        fillAllPersonsTable(getAllClubRequestsByClubId(id_club + ""), '#requests_table', loadType.READ_REQUESTED);
+        fillAllEventTable(getAllEventsByClubId(id_club + ""), '#events_table'); //todo przerobić na przekazywanie typu
+        fillAllRangesTable(getAllRangesByClubId(id_club + ""));
+    }
 }
 
 // function fillClubFormByLocalDataIndex(index) {
@@ -80,7 +103,7 @@ async function fillClubForm(Data) {
 //      fillClubForm(clubData);
 // }
 
-async function fillAllClubsTable(Data, tableId) {
+function fillAllClubsTable(Data, tableId) {
    //  let tableId = '#clubs_table';
 
     Data.then((clubs) => {
@@ -125,7 +148,7 @@ async function fillAllClubsTable(Data, tableId) {
     });
 }
 
-async function fillEventForm(Data) {
+function fillEventForm(Data) {
     Data.then((event) => {
         $("#nazwa").val(event.name);
         $("#id_event").val(event.id_event);
@@ -152,11 +175,25 @@ async function fillEventForm(Data) {
         if (event.membersOnly === true) {
             $("#czlonkowie").prop("checked", true);
         }
+
+        fillEventRelatedDataTables(event.id_event);
     });
+
 }
 
-async function fillAllEventTable(Data, tableId) {
-    console.log(tableId);
+function fillEventRelatedDataTables (id_event) {
+    let currentState = localStorage.getItem("currentState");
+    initializeEventForm();
+    if (currentState === "USER") {
+        fillAllPersonsTable(getAllEventParticipantsByEventId(id_event + ""), '#participantsTable', loadType.READ);
+        // fillAllPersonsTable(getAllClubRequestsByClubId(club.id_club), '#requests_table', loadType.READ_REQUESTED);
+    } else if (currentState === "CLUB") {
+        fillAllPersonsTable(getAllEventParticipantsByEventId(id_event + ""), '#participantsTable', loadType.READ);
+        fillAllPersonsTable(getAllEventParticipantsRequestsByEventId(id_event + ""), '#requestsTable', loadType.READ_REQUESTED);
+    }
+}
+
+function fillAllEventTable(Data, tableId) {
     Data.then((events) => {
         $(document).ready(function () {
             let table = $(tableId).DataTable({
@@ -184,30 +221,36 @@ async function fillAllEventTable(Data, tableId) {
                 ],
             });
             $(tableId + ' tbody').on('click', 'tr', function () {
-                load_event_form(loadType.READ);
-
+                let currentState = localStorage.getItem("currentState");
                 let loggedUserJoinedEventsIds = JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds"));
                 let loggedUserAppliedEventsIds = JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds"));
                 console.log(loggedUserJoinedEventsIds);
                 console.log(loggedUserAppliedEventsIds);
 
-                if (loggedUserJoinedEventsIds.includes(table.row(this).data().id_event)) {
-                    load_event_form(loadType.READ_JOINED);
-                } else if (loggedUserAppliedEventsIds.includes(table.row(this).data().id_event)) {
-                    load_event_form(loadType.READ_REQUESTED);
-                } else {
-                    load_event_form(loadType.READ_ONLY);
+                if (currentState === "USER") {
+                    if (loggedUserJoinedEventsIds.includes(table.row(this).data().id_event)) {
+                        load_event_form(loadType.READ_JOINED);
+                    } else if (loggedUserAppliedEventsIds.includes(table.row(this).data().id_event)) {
+                        load_event_form(loadType.READ_REQUESTED);
+                    } else {
+                        load_event_form(loadType.READ);
+                    }
+                }   else if (currentState === "CLUB") {
+
+                    load_event_form(loadType.READ_OWNER);
                 }
 
                 fillEventForm(getEventById(table.row(this).data().id_event));
 
-
             });
         });
     })
+
+
 }
 
-async function fillRangeForm(Data) {
+
+function fillRangeForm(Data) {
     Data.then((range) => {
         $("#nazwa").val(range.name);
         $("#id_shootingrange").val(range.id_shootingrange);
@@ -216,7 +259,7 @@ async function fillRangeForm(Data) {
     });
 }
 
-async function fillAllRangesTable(Data) {
+function fillAllRangesTable(Data) {
     Data.then((ranges) => {
         $(document).ready(function () {
             let table = $('#ranges_table').DataTable({
@@ -240,7 +283,7 @@ async function fillAllRangesTable(Data) {
     })
 }
 
-async function fillRangesNamesToEventRegistrationForm(rangesNames) {
+function fillRangesNamesToEventRegistrationForm(rangesNames) {
     rangesNames.then((rangesNamesData) => {
         let rangesListHtml = "";
         for (let i = 0; i < rangesNamesData.length; i++) {

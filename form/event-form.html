@@ -47,34 +47,191 @@
 
     function setCreateEvent() {
         enableAll();
-        $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitEventForm(methods.POST)\">");
+        $("#submitEventFormButton").show();
+
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+        $("#allEventRelatedData").hide();
     }
+
 
     function setReadOnlyEvent() {
         disableAll();
-        $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz się!\" onclick=\"submitEventRequestByParticipantForm()\">");
+        $("#submitEventFormButton").hide();
+
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+        $("#allEventRelatedData").hide();
     }
 
-    function setReadJoinedEvent() {
+    function setReadEvent() {
         disableAll();
-        $("#form_submit_button").html(" <input type=\"button\" value=\"Zrezygnuj z udziału\" onclick=\"submitEventLeaveByParticipantForm()\">");
+        $("#submitEventFormButton").hide();
+
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").show();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+
+        $("#allEventRelatedData").show();
+        $("#eventRequestsTable").hide();
+        $("#showRequestsButton").hide();
     }
 
     function setReadRequestedEvent() {
         disableAll();
-        $("#form_submit_button").html(" <input type=\"button\" value=\"Anuluj proźbę o dołączenie\" onclick=\"submitEventRequestByParticipantDeleteForm()\">");
+        $("#submitEventFormButton").hide();
+
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").show();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+
+        $("#allEventRelatedData").show();
+        $("#showRequestsButton").hide();
+        $("#eventRequestsTable").hide();
+    }
+
+    function setReadJoinedEvent() {
+        disableAll();
+        $("#submitEventFormButton").hide();
+        $("#panelEdycjiEventu").hide();
+        ("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").show();
+        $("#manageEventButton").hide();
+        $
+
+        $("#allEventRelatedData").show();
+        $("#showRequestsButton").hide();
+        $("#eventRequestsTable").hide();
+    }
+
+    function setReadOwnerEvent() {
+        enableAll();
+        $("#submitEventFormButton").hide();
+
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").show();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").show();
+
+        $("#allEventRelatedData").show();
+        $("#showRequestsButton").hide();
+        $("#eventRequestsTable").hide();
     }
 
     function setUpdateEvent() {
         enableAll();
-        $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.PATCH)\">\n" +
-            "        <input type=\"button\" value=\"Usuń\" onclick=\"submitEventForm(methods.DELETE)\">\n" +
-            "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadEvent()\">");
+        $("#submitEventFormButton").hide();
+
+        $("#panelEdycjiEventu").show();
+        $("#updateEventButton").hide();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+        $("#allEventRelatedData").hide();
     }
 
-    // function setDeleteEvent() {
-    //     $("#form_submit_button").html(" <input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitEventForm(methods.DELETE)\">");
-    // }
+    function setControlEvent() {
+        enableAll();
+        $("#submitEventFormButton").hide();
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").show();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+        $("#allEventRelatedData").show();
+        $("#eventRequestsTable").show();
+        $("#showRequestsButton").show();
+    }
+
+    function setControlEventBack() {
+        enableAll();
+        $("#submitEventFormButton").hide();
+        $("#panelEdycjiEventu").hide();
+        $("#updateEventButton").show();
+
+        $("#joinEventRequestButton").hide();
+        $("#cancelEventRequestButton").hide();
+        $("#quitEventPaticipationButton").hide();
+        $("#manageEventButton").hide();
+
+        $("#allEventRelatedData").show();
+        $("#eventRequestsTable").show();
+        $("#showRequestsButton").show();
+    }
+
+    function showEventParticipantsTable() {
+        $("#relatedEventDataLists").show();
+        $("#eventParticipantsTable").show();
+        $("#eventRequestsTable").hide();
+        $("#relatedDataLegend").text("Uczestnicy");
+        $("#showParticipantsButton").prop('disabled', true);
+        $("#showRequestsButton").prop('disabled', false);
+    }
+
+    function showEventParticipantsRequestsTable() {
+        $("#relatedEventDataLists").show();
+        $("#eventParticipantsTable").hide();
+        $("#eventRequestsTable").show();
+        $("#relatedDataLegend").text("Zgłoszenia");
+        $("#showParticipantsButton").prop('disabled', false);
+        $("#showRequestsButton").prop('disabled', true);
+    }
+
+
+
+    function initializeEventForm() {
+        console.log("inicjalizuję");
+        $("#relatedEventDataLists").hide();
+
+        $("#eventParticipantsTable").load("form/all-persons-list.html", function () {
+            $("#eventParticipantsTable").hide();
+            $("#persons_table").attr('id', 'participantsTable');
+            $("#showParticipantsButton").prop('disabled', false);
+
+                $("#eventRequestsTable").load("form/all-persons-list.html", function () {
+                    $("#eventRequestsTable").hide();
+                    $("#persons_table").attr('id', 'requestsTable');
+                    $("#showRequestsButton").prop('disabled', false);
+                });
+        });
+    }
+
+
+
 
 
 </script>
@@ -150,12 +307,36 @@
         </fieldset>
 
     </div>
-    <div class="form_submit_button" id="form_submit_button">
-<!--        <input type="button" value="Edytuj" onclick="setUpdateEvent()">-->
+
+    <div class="form_row" id="allEventRelatedData">
+        <div class="form_row" id="relatedEventDataPanel">
+            <input type="button" id="showParticipantsButton" value="Uczestnicy" onclick="showEventParticipantsTable()">
+            <input type="button" id="showRequestsButton" value="Aplikanci" onclick="showEventParticipantsRequestsTable()">
+        </div>
+
+        <fieldset class="form_fieldset" id="relatedEventDataLists">
+            <legend id="relatedDataLegend">Uczestnicy</legend>
+            <div class="form_row" id="eventParticipantsTable"></div>
+            <div class="form_row" id="eventRequestsTable"></div>
+        </fieldset>
     </div>
 
+    <div class="form_row" id="panelEdycjiEventu">
+        <input type="button" value="Zapisz zmiany" onclick="submitEventForm(methods.PATCH)">
+        <input type="button" value="Usuń" onclick="submitEventForm(methods.DELETE)">
+        <input type="button" value="Anuluj" onclick="setReadJoinedEvent()">
 
+    </div>
 
+    <div class="form_row" id="panelZarzadzaniaEventu">
+        <input type="button" id="submitEventFormButton" value="Utwórz" onclick="submitEventForm(methods.POST)">
+        <input type="button" id="joinEventRequestButton" value="Zapisz się!" onclick="submitEventRequestByParticipantForm()">
+        <input type="button" id="cancelEventRequestButton" value="Anuluj proźbę o dołączenie" onclick="submitEventRequestByParticipantDeleteForm()">
+        <input type="button" id="quitEventPaticipationButton" value="Zrezygnuj z udziału" onclick="submitEventLeaveByParticipantForm()">
+
+        <input type="button" id="manageEventButton" value="Zarządzaj eventem" onclick="setControlEvent()">
+        <input type="button" id="updateEventButton" value="Edytuj" onclick="setUpdateEvent()">
+    </div>
 
 
 </form>

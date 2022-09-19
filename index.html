@@ -10,8 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap" rel="stylesheet">
 
-<!--    <link rel="stylesheet" href="form/person-form.html">-->
-<!--    <link rel="stylesheet" href="form/person-registration-form.html">-->
 
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -45,7 +43,7 @@
 
     <nav>
         <ul class="menu">
-            <li><a href="#">Strona głowna</a></li>
+            <li><a href="#" onclick="load_starter_page()">Strona głowna</a></li>
             <li><a href="#" onclick="load_all_events_form()">Wydarzenia</a></li>
             <li><a href="#" onclick="load_all_clubs_form()">Kluby</a></li>
             <li><a href="#" onclick="load_all_ranges_form()">Strzelnice</a></li>
@@ -57,23 +55,15 @@
 <!--lewy panel-->
 <aside class="sidemenu" onclick="randomAnimation()">
     <ul>
+        <li><input type="button" class="button" id="loginButton" value="Zaloguj" onclick="load_login_form()"></li>
+        <li><input type="button" class="button" id="logoutButton" value="Wyloguj" onclick="logout()" hidden></li>
+        <li><input type="button" class="button" id="registerButton" value="Zarejestruj się" onclick="load_person_form(loadType.CREATE)"></li>
+        <li><a id="currentState">Gość</a></li>
         <li><input type="button" class="button" value="Mój profil" onclick="load_logged_person_form()"></li>
         <li><input type="button" class="button" value="Moje kluby" onclick="load_logged_person_clubs_form()"></li>
         <li><input type="button" class="button" value="Moje eventy" onclick="load_logged_person_events_form()"></li>
 
-        <li><a href="#">Mój profil</a></li>
-        <li><a href="#">Mój klub</a></li>
-        <li><a href="#">Moje wydarzenia</a></li>
-        <li><a href="#">Znajomi</a></li>
-
-        <li><input type="button" class="button" value="Formularz eventu" onclick="load_event_form(loadType.CREATE)"></li>
-
-        <li><input type="button" class="button" value="Formularz strzelnicy" onclick="load_range_form(loadType.CREATE)"></li>
-
-        <li><input type="button" class="button" id="loginButton" value="Zaloguj" onclick="load_login_form()"></li>
-        <li><input type="button" class="button" id="logoutButton" value="Wyloguj" onclick="logout()" hidden></li>
-        <li><input type="button" class="button" id="registerButton" value="Zarejestruj się" onclick="load_person_form(loadType.CREATE)"></li>
-        <li><input type="button" class="button" value="Próba" onclick="refreshEventsRequests(3)"></li>
+<!--        <li><input type="button" class="button" value="Próba" onclick="refreshEventsRequests(3)"></li>-->
 
 
 

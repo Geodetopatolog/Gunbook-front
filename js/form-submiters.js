@@ -54,59 +54,82 @@ async function submitPersonForm(method) {
             let id_person = $("#id_person").val();
             let u = url.PERSON + '?id_person=' + id_person.toString();
 
-            await httpRequestDelete(u, load_all_persons_form, refreshNothing);
+            await httpRequestDelete(u).then(() => {
+                load_starter_page();
+            });
         }
     }
 }
 
 //---- Person - Club ----
-async function submitClubLeaveByMemberForm() {
+function submitClubLeaveByMemberForm() {
     let id_club = $("#id_club").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_JOINED_CLUBS + '?id_person=' + id_person.toString() + '&id_club=' + id_club.toString();
 
-    await httpRequestDelete(u, load_logged_person_clubs_form, refreshLoggedUserAllClubs);
+        httpRequestDelete(u).then(() => {
+        refreshLoggedUserAllClubs(id_person);
+        load_logged_person_clubs_form();
+
+    } );
 }
 
-async function submitClubMembershipRequestByPersonForm() {
+function submitClubMembershipRequestByPersonForm() {
     let id_club = $("#id_club").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_REQUESTED_CLUBS + '?id_person=' + id_person.toString() + '&id_club=' + id_club.toString();
 
-    await httpRequestPostPatch(u, "", "PATCH", refreshLoggedUserAllClubs);
+    httpRequestPostPatch(u, "", "PATCH").then(() => {
+        refreshLoggedUserAllClubs(id_person);
+        setReadAplierClub();
+    });
 }
 
-async function submitDeleteClubMembershipRequestByPersonForm() {
+function submitDeleteClubMembershipRequestByPersonForm() {
     let id_club = $("#id_club").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_REQUESTED_CLUBS + '?id_person=' + id_person.toString() + '&id_club=' + id_club.toString();
 
-    await httpRequestDelete(u, load_logged_person_clubs_form, refreshLoggedUserAllClubs);
+        httpRequestDelete(u).then(() => {
+        refreshLoggedUserAllClubs(id_person);
+        load_logged_person_clubs_form();
+
+    });
 }
 
 //---- Person - Event ----
-async function submitEventLeaveByParticipantForm() {
+function submitEventLeaveByParticipantForm() {
     let id_event = $("#id_event").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_JOINED_EVENTS + '?id_person=' + id_person.toString() + '&id_event=' + id_event.toString();
 
-    await httpRequestDelete(u, load_logged_person_events_form, refreshLoggedUserAllEvents);
+        httpRequestDelete(u).then(() => {
+        refreshLoggedUserAllEvents(id_person);
+        load_logged_person_events_form();
+
+    });
 }
 
-async function submitEventRequestByParticipantForm() {
+function submitEventRequestByParticipantForm() {
     let id_event = $("#id_event").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_JOINED_EVENTS_REQUESTS + '?id_person=' + id_person.toString() + '&id_event=' + id_event.toString();
 
-    await httpRequestPostPatch(u, "", "PATCH", refreshLoggedUserAllEvents);
+     httpRequestPostPatch(u, "", "PATCH").then(() => {
+         refreshLoggedUserAllEvents(id_person);
+         setReadRequestedEvent();
+     });
 }
 
-async function submitEventRequestByParticipantDeleteForm() {
+function submitEventRequestByParticipantDeleteForm() {
     let id_event = $("#id_event").val();
     let id_person =  localStorage.getItem("loggedUserId");
     let u = url.PERSON_JOINED_EVENTS_REQUESTS + '?id_person=' + id_person.toString() + '&id_event=' + id_event.toString();
 
-    await httpRequestDelete(u, load_logged_person_events_form, refreshLoggedUserAllEvents);
+    httpRequestDelete(u).then(() => {
+        refreshLoggedUserAllEvents(id_person);
+        load_logged_person_events_form();
+    });
 }
 
 //---- CLUB -  ----
@@ -138,34 +161,65 @@ async function submitClubForm(method) {
         club.sport = $("#sport").checked;
         club.fun = $("#rekreacja").checked;
 
-    console.log(club);
-            await httpRequestPostPatch(url.CLUB, club, method, refreshLoggedUserAllClubs)
-
+            await httpRequestPostPatch(url.CLUB, club, method).then(() => {
+                if (method === "POST" ) {
+                    refreshLoggedUserAllClubs(localStorage.getItem("loggedUserId"));
+                    load_logged_person_clubs_form();
+                } else if (method === "PATCH") {
+                    setControlClub();
+                }
+            });
 
     } else if (method==="DELETE") {
 
         let id_club = $("#id_club").val();
         let u = url.CLUB + '?id_club=' + id_club.toString();
 
-        await httpRequestDelete(u, load_all_clubs_form, refreshLoggedUserAllClubs);
+        await httpRequestDelete(u).then(() => {
+            refreshLoggedUserAllClubs(localStorage.getItem("loggedUserId"));
+            load_logged_person_clubs_form();
+        });
     }
 }
 
 
 //---- CLUB - Person ----
 
-async function submitAcceptMembershipRequestByPersonForm() {
+function submitAcceptMembershipRequestByPersonForm() {
     let id_club = localStorage.getItem("currentClubId");
     let id_person =  $("#id_person").val();
     let u = url.CLUB_MEMBERSHIP_REQUESTS + '?id_club=' + id_club.toString() + '&id_person=' + id_person.toString();
 
-    await httpRequestPostPatch(u, "", "PATCH", refreshNothing)
-    load_current_club_form(id_club);
+    httpRequestPostPatch(u, "", "PATCH").then(() => {
+         load_current_club_form(id_club);
+        showAllRequests();
+    } );
+}
+
+function submitCancelMembershipRequestByPersonForm() {
+    let id_club = localStorage.getItem("currentClubId");
+    let id_person =  $("#id_person").val();
+    let u = url.CLUB_MEMBERSHIP_REQUESTS + '?id_club=' + id_club.toString() + '&id_person=' + id_person.toString();
+
+    httpRequestDelete(u).then(() => {
+            load_current_club_form();
+        showAllRequests();
+        })
+}
+
+function submitCancelMembershipByPersonForm() {
+    let id_club = localStorage.getItem("currentClubId");
+    let id_person =  $("#id_person").val();
+    let u = url.CLUB_MEMBERS + '?id_club=' + id_club.toString() + '&id_person=' + id_person.toString();
+
+    httpRequestDelete(u).then(() => {
+        load_current_club_form();
+    });
 
 }
 
-//todo ogarnąć tą zasraną koleność wykonywania funkcji
 //---- CLUB - Event ----
+
 
 
 //---- CLUB ----
@@ -215,14 +269,26 @@ async function submitEventForm(method) {
             event.id_event = $("#id_event").val();
         }
 
-        await httpRequestPostPatch(url.EVENT, event, method, refreshLoggedUserAllEvents);
+        await httpRequestPostPatch(url.EVENT, event, method).then(() => {
+
+            if (method === "POST" ) {
+                load_current_club_form();
+                showAllEvents();
+            } else if (method === "PATCH") {
+                setControlEventBack();
+            }
+
+        });
 
     } else if (method==="DELETE") {
 
         let id_event = $("#id_event").val();
         let u = url.EVENT + '?id_event=' + id_event.toString();
 
-        await httpRequestDelete(u, load_all_events_form, refreshLoggedUserAllEvents);
+        await httpRequestDelete(u).then(() => {
+            load_current_club_form();
+            showAllEvents();
+        });
     }
 
     // let id_person = localStorage.getItem("loggedUserId");
@@ -243,23 +309,39 @@ async function submitRangeForm(method) {
             "name": "",
             "id_shootingrange": -1,
             "description": "",
-            "adress": ""
+            "adress": "",
+            "id_club": -1
         }
-        range.id_shootingrange = $("#id_shootingrange").val();
+        if ($("#id_shootingrange").val() !== null) {
+            range.id_shootingrange = $("#id_shootingrange").val();
+        }
+
         range.name = $("#nazwa").val();
         range.description = $("#opis").val();
         range.adress = $("#adres").val();
 
+        range.id_club = localStorage.getItem("rangeCreatorClubId");
+
         console.log(range);
 
-        await httpRequestPostPatch(url.RANGE, range, method, refreshNothing);
+        await httpRequestPostPatch(url.RANGE, range, method).then(() => {
+            if (method === "POST" ) {
+                load_current_club_form();
+                showAllShootingranges();
+            } else if (method === "PATCH") {
+                setReadRange();
+            }
+        });
 
     } else if (method==="DELETE") {
 
         let id_shootingrange = $("#id_shootingrange").val();
         let u = url.RANGE + '?id_range=' + id_shootingrange.toString();
 
-        await httpRequestDelete(u, load_all_ranges_form, refreshNothing);
+        await httpRequestDelete(u).then(() => {
+            load_current_club_form();
+            showAllShootingranges();
+        });
     }
 }
 
@@ -268,6 +350,7 @@ async function submitRangeForm(method) {
 //---- Login ----
 function submitLoginForm() {
     login(document.getElementById("login").value, document.getElementById("pass1").value);
-
+    load_starter_page();
+//todo dorobić wylogowywanie po dodaniu w backendzie listy nieważnych tokenów
 }
 

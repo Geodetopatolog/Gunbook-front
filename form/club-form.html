@@ -25,11 +25,15 @@
             $("#czlonkowie-ilosc").hide();
             $("#czlonkowie-lista").hide();
             $("#relatedDataPanel").hide();
+
             $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
             $("#relatedDataLists").hide();
             $("#club_application_button").hide();
             $("#remove_club_application_button").hide();
             $("#leave_club_button").hide();
+            $("#control_club_button").hide();
             $("#update_club_button").hide();
             $("#panelEdycji").hide();
             $("#form_submit_button").show();
@@ -40,13 +44,18 @@
             $("#czlonkowie-ilosc").show();
             $("#czlonkowie-lista").hide();
             $("#relatedDataPanel").hide();
+
             $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
             $("#form_submit_button").hide();
             $("#club_application_button").hide();
             $("#remove_club_application_button").show();
             $("#leave_club_button").hide();
+            $("#control_club_button").hide();
             $("#update_club_button").hide();
             $("#panelEdycji").hide();
+            // initializeClubForm();
         }
 
         //widzi inych członków, nie może edytować
@@ -55,13 +64,19 @@
             $("#czlonkowie-ilosc").show();
             $("#czlonkowie-lista").show();
             $("#relatedDataPanel").show();
+
             $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
             $("#form_submit_button").hide();
             $("#club_application_button").hide();
             $("#remove_club_application_button").hide();
+            $("#aplikanci-button").hide();
             $("#leave_club_button").show();
+            $("#control_club_button").hide();
             $("#update_club_button").hide();
             $("#panelEdycji").hide();
+            // initializeClubForm();
         }
 
         //widzi innych członków i może edytować
@@ -70,15 +85,67 @@
             $("#czlonkowie-ilosc").show();
             $("#czlonkowie-lista").show();
             $("#relatedDataPanel").show();
-            // $("#relatedDataLists").show();
-            $("#create_event_button").show();
+
+            $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
             $("#form_submit_button").hide();
             $("#club_application_button").hide();
             $("#remove_club_application_button").hide();
+            $("#aplikanci-button").hide();
             $("#leave_club_button").hide();
+            $("#control_club_button").show();
+            $("#update_club_button").hide();
+            $("#panelEdycji").hide();
+            // initializeClubForm();
+        }
+
+        function setControlClub() {
+            disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").show();
+            $("#relatedDataPanel").show();
+
+            $("#create_event_button").show();
+            $("#create_range_button").show();
+
+            $("#form_submit_button").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#aplikanci-button").show();
+            $("#leave_club_button").hide();
+            $("#control_club_button").hide();
             $("#update_club_button").show();
             $("#panelEdycji").hide();
+
+            setCurrentState(states.CLUB);
+            // initializeClubForm();
+            fillClubRelatedDataTables(localStorage.getItem("currentClubId"));
+            console.log("działam");
         }
+        function setControlClubBack() {
+            disableAll();
+            $("#czlonkowie-ilosc").show();
+            $("#czlonkowie-lista").show();
+            $("#relatedDataPanel").show();
+
+            $("#create_event_button").show();
+            $("#create_range_button").show();
+
+            $("#form_submit_button").hide();
+            $("#club_application_button").hide();
+            $("#remove_club_application_button").hide();
+            $("#aplikanci-button").show();
+            $("#leave_club_button").hide();
+            $("#control_club_button").hide();
+            $("#update_club_button").show();
+            $("#panelEdycji").hide();
+
+            console.log("działam2");
+        }
+
+
+
 
         //widzi tylko liczbę członków, nie może edytować
         function setReadOnlyClub() {
@@ -87,11 +154,15 @@
             $("#czlonkowie-lista").hide();
             $("#relatedDataPanel").hide();
             $("#relatedDataLists").hide();
+
             $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
             $("#form_submit_button").hide();
             $("#club_application_button").show();
             $("#remove_club_application_button").hide();
             $("#leave_club_button").hide();
+            $("#control_club_button").hide();
             $("#update_club_button").hide();
             $("#panelEdycji").hide();
         }
@@ -102,16 +173,26 @@
             $("#czlonkowie-lista").hide();
             $("#relatedDataPanel").hide();
             $("#relatedDataLists").hide();
+
             $("#create_event_button").hide();
+            $("#create_range_button").hide();
+
+
             $("#club_application_button").hide();
             $("#remove_club_application_button").hide();
             $("#leave_club_button").hide();
+            $("#control_club_button").hide();
             $("#update_club_button").hide();
             $("#panelEdycji").show();
         }
         function prepareForCreatingEvent() {
             localStorage.setItem("eventOrganizerClubId", $("#id_club").val());
             load_event_form(loadType.CREATE);
+        }
+
+        function prepareForCreatingRange() {
+            localStorage.setItem("rangeCreatorClubId", $("#id_club").val());
+            load_range_form(loadType.CREATE);
         }
 
         function showAllMembers() {
@@ -168,6 +249,7 @@
 
 
         function initializeClubForm() {
+            // console.log("Inicjalizuję");
              $("#relatedDataLists").hide();
             $("#czlonkowie-lista").load("form/all-persons-list.html", function() {
                 $("#czlonkowie-lista").hide();
@@ -190,6 +272,11 @@
                 $("#strzelnice-button").prop('disabled', false);
             });
 
+        }
+
+
+        function napiszOK() {
+            console.log("ok");
         }
 
 
@@ -247,7 +334,7 @@
                     <legend id="relatedDataLegend">Członkowie</legend>
                     <div class="form_row" id="czlonkowie-lista"></div>
                     <div class="form_row" id="aplikanci-lista"></div>
-                    <div class="form_row" id="eventy-lista"> </div>
+                    <div class="form_row" id="eventy-lista" onclick="napiszOK()"></div>
                     <div class="form_row" id="strzelnice-lista"></div>
                 </fieldset>
 
@@ -261,9 +348,13 @@
     </div>
 
     <div class="form_submit_button">
+        <input type="button" id="control_club_button"  value="Zarządzaj klubem" onclick="setControlClub()">
         <input type="button" id="update_club_button"  value="Edytuj" onclick="setUpdateClub()">
-        <input type="button" id="form_submit_button" value="Stwórz klub" onclick="prepareForCreatingEvent()">
+        <input type="button" id="form_submit_button" value="Stwórz klub" onclick="submitClubForm(methods.POST)">
+
         <input type="button" id="create_event_button" value="Utwórz nowy event" onclick="prepareForCreatingEvent()">
+        <input type="button" id="create_range_button" value="Dodaj strzelnicę" onclick="prepareForCreatingRange()">
+
         <input type="button" id="club_application_button" value="Zostań naszym członkiem!" onclick="submitClubMembershipRequestByPersonForm()">
         <input type="button" id="leave_club_button" value="Opuść klub" onclick="submitClubLeaveByMemberForm()">
         <input type="button" id="remove_club_application_button" value="Cofnij prośbę o przyjęcie" onclick="submitDeleteClubMembershipRequestByPersonForm()">

@@ -25,24 +25,43 @@ function setSameValueOnEventDate() {
     document.getElementById("dzienk").value = document.getElementById("dziens").value;
 }
 
-async function httpRequestPostPatch(url, body, method, refreshFunction) {
-    console.log(method);
-    let params = {
-        headers:{
-            'Content-Type': "application/json",
-            'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
-        },
-        body: JSON.stringify(body),
-        method: method
-    }
+function httpRequestPostPatch(url, body, method) {
 
-    fetch(url, params)
-        .then(response => response.statusText)
-        .then(data => {
-            console.log('sukces:', data);})
-        .finally(() => {
-        refreshFunction(localStorage.getItem("loggedUserId"));
+    // let params = {
+    //     headers:{
+    //         'Content-Type': "application/json",
+    //         'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
+    //     },
+    //     body: JSON.stringify(body),
+    //     method: method
+    // }
+    // await fetch(url, params)
+    //     .then(response => response.statusText)
+    //     .then(() => {
+    //     refreshFunction(localStorage.getItem("loggedUserId"));
+    // });
+
+    return new Promise((resolve, reject) => {
+        let params = {
+            headers:{
+                'Content-Type': "application/json",
+                'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
+            },
+            body: JSON.stringify(body),
+            method: method
+        }
+
+        fetch(url, params).then(res => {
+            if (res.status > 199 && res.status < 203) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
+        });
+        //todo dorobić obsługę różnych błędów
     });
+
+
 }
 
 async function httpRequestPostPersonRegistrationForm(url, body) {
@@ -61,7 +80,7 @@ async function httpRequestPostPersonRegistrationForm(url, body) {
         });
 }
 
-async function httpRequestGet(Url) {
+async function httpRequestGet(url) {
 
     let params = {
         headers:{
@@ -71,28 +90,47 @@ async function httpRequestGet(Url) {
         method: "GET"
     }
     console.log(params);
-    let res = await fetch(Url, params);
+    let res = await fetch(url, params);
     console.log(res);
     return await res.json();
 }
 
-async function httpRequestDelete(url, fillFunction, refreshFunction) {
-    let params = {
-        headers:{
-            'Content-Type': "application/json",
-            'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
-        },
-        method: "DELETE"
-    }
+function httpRequestDelete(url) {
+    // let params = {
+    //     headers:{
+    //         'Content-Type': "application/json",
+    //         'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
+    //     },
+    //     method: "DELETE"
+    // }
+    //
+    // fetch(url, params)
+    //  //   .then(response => response.statusText)
+    //     .then(() => {
+    //         fillFunction();
+    //     })
+    //     .then(() => {
+    //     refreshFunction(localStorage.getItem("loggedUserId"));
+    // });
 
-    fetch(url, params)
-     //   .then(response => response.statusText)
-        .then(() => {
-            fillFunction();})
-        .finally(() => {
-        refreshFunction(localStorage.getItem("loggedUserId"));
+    return new Promise((resolve, reject) => {
+        let params = {
+                headers:{
+                    'Content-Type': "application/json",
+                    'Authorization': 'Bearer ' + localStorage.getItem("JWT"),
+                },
+                method: "DELETE"
+            }
+
+        fetch(url, params).then(res => {
+            if (res.status > 199 && res.status < 203) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
+        });
+        //todo dorobić obsługę różnych błędów
     });
-
 }
 
 async function login(username, password) {
@@ -126,16 +164,17 @@ async function login(username, password) {
         localStorage.setItem("loggedUserAppliedClubsIds", JSON.stringify(log.loggedUserAppliedClubsIds));
         localStorage.setItem("loggedUserAppliedEventsIds", JSON.stringify(log.loggedUserAppliedEventsIds));
 
+        // console.log(parseJwt(log.jwt).id);
+        // console.log("localStorage JWT " + localStorage.getItem("JWT"));
+        // console.log("localStorage authority " + localStorage.getItem("authority"));
+        // console.log("localStorage loggedUserId " + localStorage.getItem("loggedUserId"));
+        // console.log("localStorage loggedUserClubsIds " + JSON.parse(localStorage.getItem("loggedUserClubsIds")));
+        // console.log("localStorage loggedUserOwnedClubsIds " + JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds")));
+        // console.log("localStorage loggedUserJoinedEventsIds " + JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds")));
+        // console.log("localStorage loggedUserAppliedClubsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds")));
+        // console.log("localStorage loggedUserAppliedEventsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds")));
 
-        console.log(parseJwt(log.jwt).id);
-        console.log("localStorage JWT " + localStorage.getItem("JWT"));
-        console.log("localStorage authority " + localStorage.getItem("authority"));
-        console.log("localStorage loggedUserId " + localStorage.getItem("loggedUserId"));
-        console.log("localStorage loggedUserClubsIds " + JSON.parse(localStorage.getItem("loggedUserClubsIds")));
-        console.log("localStorage loggedUserOwnedClubsIds " + JSON.parse(localStorage.getItem("loggedUserOwnedClubsIds")));
-        console.log("localStorage loggedUserJoinedEventsIds " + JSON.parse(localStorage.getItem("loggedUserJoinedEventsIds")));
-        console.log("localStorage loggedUserAppliedClubsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedClubsIds")));
-        console.log("localStorage loggedUserAppliedEventsIds " + JSON.parse(localStorage.getItem("loggedUserAppliedEventsIds")));
+        setCurrentState(states.USER);
 
         load_logged_person_form();
         $("#loginButton").hide();
@@ -156,6 +195,21 @@ function logout() {
     $("#loginButton").show();
     $("#logoutButton").hide();
     $("#registerButton").show();
+}
+
+function setCurrentState(state) {
+    localStorage.setItem("currentState", state);
+    switch(state) {
+        case "GUEST": {
+            $("#currentState").text("Gość");
+        } break;
+        case "USER": {
+            $("#currentState").text("Użytkownik");
+        } break;
+        case "CLUB": {
+            $("#currentState").text("Club");
+        }
+    }
 }
 
 

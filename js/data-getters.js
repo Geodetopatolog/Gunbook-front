@@ -94,6 +94,22 @@ async function getEventsAppliedByPersonId(id) {
     return await httpRequestGet(Url);
 }
 
+async function getAllEventParticipantsByEventId(id) {
+    let Url = url.EVENTS_PARTICIPANTS + '?id_event=';
+    Url = Url + id.toString();
+
+    return await httpRequestGet(Url);
+}
+
+async function getAllEventParticipantsRequestsByEventId(id) {
+    let Url = url.EVENTS_PARTICIPANTS_REQUESTS + '?id_event=';
+    Url = Url + id.toString();
+
+    return await httpRequestGet(Url);
+}
+
+
+
 async function getRangeById(id) {
     let Url = url.RANGE + '?id_range=';
         Url = Url + id.toString();
@@ -124,7 +140,7 @@ async function refreshOwnedClubs(id) {
     let Url = url.PERSON_OWNED_CLUBS_IDS + '?id_person=';
     Url = Url + id.toString();
     let ownedClubsIds = await httpRequestGet(Url)
-    console.log(ownedClubsIds);
+    // console.log(ownedClubsIds);
     localStorage.removeItem("loggedUserOwnedClubsIds");
     localStorage.setItem("loggedUserOwnedClubsIds", JSON.stringify(ownedClubsIds));
 }
@@ -133,7 +149,7 @@ async function refreshClubsRequests(id) {
     let Url = url.PERSON_REQUESTED_CLUBS_IDS + '?id_person=';
     Url = Url + id.toString();
     let requestedClubsIds = await httpRequestGet(Url)
-    console.log(requestedClubsIds);
+    // console.log(requestedClubsIds);
     localStorage.removeItem("loggedUserAppliedClubsIds");
     localStorage.setItem("loggedUserAppliedClubsIds", JSON.stringify(requestedClubsIds));
 }
@@ -148,7 +164,7 @@ async function refreshJoinedEvents(id) {
     let Url = url.PERSON_JOINED_EVENTS_IDS + '?id_person=';
     Url = Url + id.toString();
     let joinedEventsIds = await httpRequestGet(Url)
-    console.log(joinedEventsIds);
+    // console.log(joinedEventsIds);
     localStorage.removeItem("loggedUserJoinedEventsIds");
     localStorage.setItem("loggedUserJoinedEventsIds", JSON.stringify(joinedEventsIds));
 }
@@ -157,7 +173,7 @@ async function refreshEventsRequests(id) {
     let Url = url.PERSON_JOINED_EVENTS_REQUESTS_IDS + '?id_person=';
     Url = Url + id.toString();
     let requestedEventsIds = await httpRequestGet(Url)
-    console.log(requestedEventsIds);
+    // console.log(requestedEventsIds);
     localStorage.removeItem("loggedUserAppliedEventsIds");
     localStorage.setItem("loggedUserAppliedEventsIds", JSON.stringify(requestedEventsIds));
 }

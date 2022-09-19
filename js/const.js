@@ -5,16 +5,26 @@ const methods = {
     DELETE: "DELETE"
 }
 
+const states = {
+    GUEST: "GUEST",
+    USER: "USER",
+    CLUB: "CLUB",
+    ADMIN: "ADMIN",
+    GOD: "GOD"
+}
+
 const loadType = {
     "CREATE": "create",
     "UPDATE": "update",
+    "DELETE": "delete",
     "READ": "read",
+
     "READ_REQUESTED": "readrequested",
     "READ_JOINED": "readjoined",
     "READ_MEMBER": "readmember",
     "READ_OWNER": "readowner",
     "READ_ONLY": "readonly",
-    "DELETE": "delete"
+
 }
 
 const URL_PREFIX = 'http://localhost:8080/';
@@ -46,6 +56,8 @@ const url = {
 
     EVENT: URL_PREFIX + "event",
     EVENTS: URL_PREFIX + "event/all",
+    EVENTS_PARTICIPANTS: URL_PREFIX + "event/participants",
+    EVENTS_PARTICIPANTS_REQUESTS: URL_PREFIX + "event/participants/requests",
 
 
     RANGE: URL_PREFIX + "range",

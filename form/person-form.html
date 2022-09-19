@@ -53,7 +53,7 @@
         function setCreatePerson() {
             enableAll();
             enableLoginData()
-            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"submitPersonForm(methods.POST)\">");
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Utwórz\" onclick=\"registerPerson()\">");
         }
 
         function setReadOnlyPerson() {
@@ -67,20 +67,54 @@
             disableLoginData()
             $("#form_submit_button").html(" <input type=\"button\" value=\"Edytuj\" onclick=\"setUpdatePerson()\">");
         }
+
         function setReadClubApplierPerson() {
             disableAll();
             disableLoginData()
-            $("#form_submit_button").html(" <input type=\"button\" value=\"Zaakceptuj kandydata\" onclick=\"submitAcceptMembershipRequestByPersonForm()\">");
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Zaakceptuj\" onclick=\"submitAcceptMembershipRequestByPersonForm()\">" +
+                "<input type=\"button\" value=\"Odrzuć \" onclick=\"submitCancelMembershipRequestByPersonForm()\">");
+        }
+
+        function setReadClubMemberPerson() {
+            disableAll();
+            disableLoginData()
+            $("#form_submit_button").html(" <input type=\"button\" value=\"Wywal gamonia z klubu\" onclick=\"submitCancelMembershipByPersonForm()\">");
         }
 
         //todo dorobić zmianę hasła
+
         function setUpdatePerson() {
             enableAll();
             disableLoginData()
-            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"submitPersonForm(methods.PATCH)\">\n" +
-                "        <input type=\"button\" value=\"Usuń\" onclick=\"submitPersonForm(methods.DELETE)\">\n" +
+            $("#form_submit_button").html("<input type=\"button\" value=\"Zapisz zmiany\" onclick=\"saveChanges()\">\n" +
+                "        <input type=\"button\" value=\"Usuń\" onclick=\"deletePerson()\">\n" +
                 "        <input type=\"button\" value=\"Anuluj\" onclick=\"setReadPerson()\">");
         }
+
+        function registerPerson() {
+            submitPersonForm(methods.POST);
+            load_login_form();
+        }
+
+        function saveChanges() {
+            submitPersonForm(methods.PATCH);
+            setReadPerson();
+        }
+
+        function deletePerson() {
+
+            if (confirm("Czy jesteś pewien?")) {
+                submitPersonForm(methods.DELETE);
+                logout();
+            } else {
+
+            }
+
+        }
+
+
+
+
     </script>
 
     <div>
@@ -113,9 +147,9 @@
                 <div class="clear_both"></div>
             </div>
             <div class="form_row">
-                <label class="form_label" for="kluby">Kluby </label>
-                <div id="kluby"></div>
-                <div class="clear_both"></div>
+<!--                <label class="form_label" for="kluby">Kluby </label>-->
+<!--                <div id="kluby"></div>-->
+<!--                <div class="clear_both"></div>-->
 <!--                <input type="button" value="Utwórz nowy klub" onclick="load_club_form(loadType.CREATE)">-->
             </div>
 
